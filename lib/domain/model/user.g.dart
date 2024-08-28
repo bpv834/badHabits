@@ -17,6 +17,10 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      joinedRooms: (json['joinedRooms'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -28,4 +32,5 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'mainHabit': instance.mainHabit,
       'age': instance.age,
       'habits': instance.habits,
+      'joinedRooms': instance.joinedRooms,
     };

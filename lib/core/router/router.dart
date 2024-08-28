@@ -1,11 +1,10 @@
+import 'package:bhgh/presentation/room_page/room_screen.dart';
+import 'package:bhgh/presentation/room_page/room_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../di/di_setup.dart';
-import '../../presentation/group_page/group_screen.dart';
-import '../../presentation/group_page/group_view_model.dart';
 import '../../presentation/home_page/home_screen.dart';
 import '../../presentation/home_page/home_view_model.dart';
 import '../../presentation/login_page/login_screen.dart';
@@ -26,7 +25,7 @@ final GoRouter router = GoRouter(
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Group'),
+              BottomNavigationBarItem(icon: Icon(Icons.room), label: 'Room'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person), label: 'My Page'),
             ],
@@ -57,11 +56,11 @@ final GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(
-              path: '/groupPage',
+              path: '/roomPage',
               builder: (BuildContext context, GoRouterState state) {
                 return ChangeNotifierProvider(
-                  create: (_) => getIt.get<GroupViewModel>(),
-                  child: GroupScreen(),
+                  create: (_) => getIt.get<RoomViewModel>(),
+                  child: RoomScreen(),
                 );
               },
             ),

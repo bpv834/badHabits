@@ -27,6 +27,7 @@ mixin _$User {
   String get mainHabit => throw _privateConstructorUsedError;
   int get age => throw _privateConstructorUsedError;
   List<String> get habits => throw _privateConstructorUsedError;
+  List<String> get joinedRooms => throw _privateConstructorUsedError;
 
   /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +50,8 @@ abstract class $UserCopyWith<$Res> {
       String gender,
       String mainHabit,
       int age,
-      List<String> habits});
+      List<String> habits,
+      List<String> joinedRooms});
 }
 
 /// @nodoc
@@ -74,6 +76,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? mainHabit = null,
     Object? age = null,
     Object? habits = null,
+    Object? joinedRooms = null,
   }) {
     return _then(_value.copyWith(
       email: null == email
@@ -104,6 +107,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.habits
           : habits // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      joinedRooms: null == joinedRooms
+          ? _value.joinedRooms
+          : joinedRooms // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -122,7 +129,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String gender,
       String mainHabit,
       int age,
-      List<String> habits});
+      List<String> habits,
+      List<String> joinedRooms});
 }
 
 /// @nodoc
@@ -144,6 +152,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? mainHabit = null,
     Object? age = null,
     Object? habits = null,
+    Object? joinedRooms = null,
   }) {
     return _then(_$UserImpl(
       email: null == email
@@ -174,6 +183,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value._habits
           : habits // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      joinedRooms: null == joinedRooms
+          ? _value._joinedRooms
+          : joinedRooms // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -188,8 +201,10 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       this.gender = 'gender',
       this.mainHabit = 'mainHabit',
       this.age = 0,
-      final List<String> habits = const []})
-      : _habits = habits;
+      final List<String> habits = const [],
+      final List<String> joinedRooms = const []})
+      : _habits = habits,
+        _joinedRooms = joinedRooms;
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -221,9 +236,18 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
     return EqualUnmodifiableListView(_habits);
   }
 
+  final List<String> _joinedRooms;
+  @override
+  @JsonKey()
+  List<String> get joinedRooms {
+    if (_joinedRooms is EqualUnmodifiableListView) return _joinedRooms;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_joinedRooms);
+  }
+
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(email: $email, name: $name, rrn: $rrn, gender: $gender, mainHabit: $mainHabit, age: $age, habits: $habits)';
+    return 'User(email: $email, name: $name, rrn: $rrn, gender: $gender, mainHabit: $mainHabit, age: $age, habits: $habits, joinedRooms: $joinedRooms)';
   }
 
   @override
@@ -237,7 +261,8 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('gender', gender))
       ..add(DiagnosticsProperty('mainHabit', mainHabit))
       ..add(DiagnosticsProperty('age', age))
-      ..add(DiagnosticsProperty('habits', habits));
+      ..add(DiagnosticsProperty('habits', habits))
+      ..add(DiagnosticsProperty('joinedRooms', joinedRooms));
   }
 
   @override
@@ -252,13 +277,23 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
             (identical(other.mainHabit, mainHabit) ||
                 other.mainHabit == mainHabit) &&
             (identical(other.age, age) || other.age == age) &&
-            const DeepCollectionEquality().equals(other._habits, _habits));
+            const DeepCollectionEquality().equals(other._habits, _habits) &&
+            const DeepCollectionEquality()
+                .equals(other._joinedRooms, _joinedRooms));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, email, name, rrn, gender,
-      mainHabit, age, const DeepCollectionEquality().hash(_habits));
+  int get hashCode => Object.hash(
+      runtimeType,
+      email,
+      name,
+      rrn,
+      gender,
+      mainHabit,
+      age,
+      const DeepCollectionEquality().hash(_habits),
+      const DeepCollectionEquality().hash(_joinedRooms));
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -284,7 +319,8 @@ abstract class _User implements User {
       final String gender,
       final String mainHabit,
       final int age,
-      final List<String> habits}) = _$UserImpl;
+      final List<String> habits,
+      final List<String> joinedRooms}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -302,6 +338,8 @@ abstract class _User implements User {
   int get age;
   @override
   List<String> get habits;
+  @override
+  List<String> get joinedRooms;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

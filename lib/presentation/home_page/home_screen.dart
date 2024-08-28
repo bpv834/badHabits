@@ -11,24 +11,23 @@ class HomeScreen extends StatelessWidget {
     final viewModel = context.watch<HomeViewModel>();
     final state = viewModel.state;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('성공'),
-      ),
-      body: state.isLoading
-          ? ListView.builder(
-              itemCount: state.tiles.length,
-              itemBuilder: (BuildContext context, int idx) {
-                return HabitTile(
-                  name: state.tiles[idx].name,
-                  age: state.tiles[idx].age,
-                  gender: state.tiles[idx].gender,
-                  mainHabit: state.tiles[idx].mainHabit,
-                  likes: state.tiles[idx].likeCount,
-                  tileId: state.tiles[idx].tileId,
-                  habits: state.tiles[idx].habits,
-                );
-              })
-          : const Center(child: CircularProgressIndicator()),
-    );
+        appBar: AppBar(
+          title: const Text('성공'),
+        ),
+        body: state.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemCount: state.tiles.length,
+                itemBuilder: (BuildContext context, int idx) {
+                  return HabitTile(
+                    name: state.tiles[idx].name,
+                    age: state.tiles[idx].age,
+                    gender: state.tiles[idx].gender,
+                    mainHabit: state.tiles[idx].mainHabit,
+                    likes: state.tiles[idx].likeCount,
+                    tileId: state.tiles[idx].tileId,
+                    habits: state.tiles[idx].habits,
+                  );
+                }));
   }
 }

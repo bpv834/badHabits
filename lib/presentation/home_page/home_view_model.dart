@@ -22,8 +22,10 @@ class HomeViewModel with ChangeNotifier {
     _getTiles();
   }
   Future<void> _getTiles() async{
+    _state = _state.copyWith(isLoading: true);
+    notifyListeners();
     List<UserTiles> tiles = await _getUserTilesAscUseCase.execute();
-    _state = _state.copyWith(isLoading: true,tiles: tiles);
+    _state = _state.copyWith(isLoading: false,tiles: tiles);
     notifyListeners();
   }
 }

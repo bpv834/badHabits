@@ -54,7 +54,7 @@ class _HabitTileState extends State<HabitTile> {
       // 좋아요 취소
       await likeRef.delete();
       //likesRef의 likeCount -1
-      await postRef.update({'likes': FieldValue.increment(-1)});
+      await postRef.update({'likeCount': FieldValue.increment(-1)});
       //상태변경
       setState(() {
         _isLiked = false;
@@ -64,7 +64,7 @@ class _HabitTileState extends State<HabitTile> {
       // 좋아요 추가
       await likeRef.set({'userId': _userId, 'tileId': widget.tileId});
       //likesRef의 likeCount +1
-      await postRef.update({'likes': FieldValue.increment(1)});
+      await postRef.update({'likeCount': FieldValue.increment(1)});
       //상태변경
       setState(() {
         _isLiked = true;

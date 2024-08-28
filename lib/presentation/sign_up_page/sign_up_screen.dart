@@ -1,4 +1,3 @@
-import 'package:bhgh/core/router/router.dart';
 import 'package:bhgh/presentation/sign_up_page/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -45,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextFormField(
                   autofocus: true,
                   controller: _nameController,
-                  decoration: InputDecoration(labelText: '이름'),
+                  decoration: InputDecoration(labelText: '닉네임'),
                   //validator : 텍스트 안에 값이 있는가 검증
                   validator: (value) {
                     if (value == null || value.isEmpty) {

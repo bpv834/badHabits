@@ -15,6 +15,7 @@ class User with _$User {
     @Default('mainHabit') String mainHabit,
     @Default(0) int age,
     @Default([]) List<String> habits,
+    @Default([]) List<String> joinedRooms,
   }) = _User;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
