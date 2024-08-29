@@ -1,4 +1,4 @@
-import 'package:bhgh/presentation/components/habit_tile.dart';
+import 'package:bhgh/presentation/home_page/components/habit_tile.dart';
 import 'package:bhgh/presentation/home_page/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

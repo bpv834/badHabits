@@ -1,6 +1,6 @@
 import 'package:bhgh/domain/model/pending_room.dart';
 import 'package:bhgh/domain/usecase/get_pending_room_use_case.dart';
-import 'package:bhgh/presentation/components/create_room_dialog.dart';
+import 'package:bhgh/presentation/room_page/components/create_room_dialog.dart';
 import 'package:bhgh/presentation/room_page/room_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,22 +11,67 @@ import 'package:provider/provider.dart';
 @injectable
 class RoomViewModel with ChangeNotifier {
   //방 목록 불러오기 생성자를 통해
-  RoomViewModel(this._pendingRoomUseCase){
-    _getPendingRooms();
+  RoomViewModel(this._pendingRoomUseCase) {
+    if (_pendingRoomUseCase == null) {
+      print('_pendingRoomUseCase = null');
+    } else {
+      print('RoomViewModel');
+      getPendingRooms();
+    }
   }
-  final GetPendingRoomUseCase _pendingRoomUseCase;
+
+  final GetPendingRoomUseCase? _pendingRoomUseCase;
 
   //상태와 getter
   RoomState _state = const RoomState();
+
   RoomState get state => _state;
 
-  Future<void> _getPendingRooms()async {
+  Future<void> joinRoomAsId(String roomId,BuildContext context) async {
+    final roomsDoc =
+        FirebaseFirestore.instance.collection('pendingRooms').doc(roomId);
+
+    // Transaction을 사용하여 필드 업데이트
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      final snapshot = await transaction.get(roomsDoc);
+
+      if (!snapshot.exists) {
+        print('방이 존재하지 않습니다.');
+        return;
+      }
+
+      List<dynamic> members = snapshot['members'] ?? [];
+
+      if (members.contains(FirebaseAuth.instance.currentUser!.uid)) {
+        print('이미 있어요');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('이미 참여중입니다!ㅠ')),
+        );
+
+      } else {
+        members.add(FirebaseAuth.instance.currentUser!.uid);
+        transaction.update(roomsDoc, {'members': members});
+        print('멤버에 추가되었습니다.');
+
+        // 사용자의 joinedRoom 필드 업데이트
+        final userRef =
+            db.collection('users').doc(FirebaseAuth.instance.currentUser!.uid);
+        await userRef.update({
+          'joinedRoom': FieldValue.arrayUnion([roomId])
+        });
+      }
+    }).catchError((error) {
+      print('방 참가 중 오류 발생: $error');
+    });
+  }
+
+  Future<void> getPendingRooms() async {
     //loading중으로 변경후
-    _state= _state.copyWith(isLoading: true);
+    _state = _state.copyWith(isLoading: true);
     notifyListeners();
     //데이터 불러와 로딩중 해제
-    List<PendingRoom> result= await _pendingRoomUseCase.execute();
-    _state = _state.copyWith(rooms: result, isLoading:false);
+    List<PendingRoom> result = await _pendingRoomUseCase!.execute();
+    _state = _state.copyWith(rooms: result, isLoading: false);
     notifyListeners();
     print('state.Rooms: ${_state.rooms}');
   }
@@ -44,7 +89,6 @@ class RoomViewModel with ChangeNotifier {
   // Firestore 인스턴스를 가져옵니다.
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
-
 // 방을 생성하는 메서드
   Future<void> createRoom(String roomName, String badHabit, String description,
       String duration) async {
@@ -54,7 +98,7 @@ class RoomViewModel with ChangeNotifier {
         "goalId": '', // 나중에 업데이트 될 예정
         "badHabit": badHabit,
         "description": description,
-        'creationDate': DateTime.now(),// 현재 날짜와 시간
+        'creationDate': DateTime.now(), // 현재 날짜와 시간
         'targetDate': null, // 나중에 설정할 수 있도록 null
         'progress': {}, // 초기에는 빈 맵
         'status': 'pending', // 목표 상태
@@ -71,7 +115,7 @@ class RoomViewModel with ChangeNotifier {
         "roomName": roomName,
         "description": description,
         "duration": duration, // 목표기간
-        "members" : ['익명1'],
+        "members": ['${FirebaseAuth.instance.currentUser!.uid}'],
       });
 
       final roomId = roomRef.id;
@@ -79,6 +123,13 @@ class RoomViewModel with ChangeNotifier {
       // 목표와 방 문서에 ID를 업데이트합니다.
       await goalRef.update({'goalId': goalId});
       await roomRef.update({'roomId': roomId});
+
+      // 사용자의 joinedRoom 필드 업데이트
+      final userRef =
+          db.collection('users').doc(FirebaseAuth.instance.currentUser!.uid);
+      await userRef.update({
+        'joinedRoom': FieldValue.arrayUnion([roomId])
+      });
 
       print(
           'DocumentSnapshot added with Goal ID: $goalId and Room ID: $roomId');

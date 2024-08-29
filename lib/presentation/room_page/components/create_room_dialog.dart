@@ -60,7 +60,7 @@ class _CreateRoomDialogState extends State<CreateRoomDialog> {
           child: Text('Cancel'),
         ),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async{
             // Perform group creation logic here
             print('Group Name: ${_roomNameController.text}');
             print('Habit to Change: ${_habitController.text}');
