@@ -9,7 +9,7 @@ part of 'room_state.dart';
 _$RoomStateImpl _$$RoomStateImplFromJson(Map<String, dynamic> json) =>
     _$RoomStateImpl(
       rooms: (json['rooms'] as List<dynamic>?)
-              ?.map((e) => PendingRoom.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => Room.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       isLoading: json['isLoading'] as bool? ?? false,

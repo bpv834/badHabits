@@ -1,16 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'pending_room.dart';
+part of 'room.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PendingRoomImpl _$$PendingRoomImplFromJson(Map<String, dynamic> json) =>
-    _$PendingRoomImpl(
-      creatorId: json['creatorId'] as String? ?? 'creatorId',
+_$RoomImpl _$$RoomImplFromJson(Map<String, dynamic> json) => _$RoomImpl(
       roomId: json['roomId'] as String? ?? 'roomId',
       goalId: json['goalId'] as String? ?? 'goalId',
+      creatorId: json['creatorId'] as String? ?? 'creatorId',
       creationDate: json['creationDate'] == null
           ? null
           : DateTime.parse(json['creationDate'] as String),
@@ -21,16 +20,18 @@ _$PendingRoomImpl _$$PendingRoomImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const [],
+      status: json['status'] as String? ?? 'pending',
     );
 
-Map<String, dynamic> _$$PendingRoomImplToJson(_$PendingRoomImpl instance) =>
+Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>
     <String, dynamic>{
-      'creatorId': instance.creatorId,
       'roomId': instance.roomId,
       'goalId': instance.goalId,
+      'creatorId': instance.creatorId,
       'creationDate': instance.creationDate?.toIso8601String(),
       'roomName': instance.roomName,
       'description': instance.description,
       'duration': instance.duration,
       'members': instance.members,
+      'status': instance.status,
     };

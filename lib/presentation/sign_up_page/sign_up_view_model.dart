@@ -38,6 +38,7 @@ class SignUpViewModel with ChangeNotifier {
 
 
       final user = <String, dynamic>{
+        "userId": '',
         "email": emailController.text,
         "name": nameController.text,
         "rrn": rrnController.text,
@@ -56,10 +57,19 @@ class SignUpViewModel with ChangeNotifier {
         'habits': _state.habitControllers.map((controller) => controller.text).toList(),
       };
 
-
-
-// Add a new document with a generated ID
       db.collection("users").doc(credential.user!.uid).set(user).onError((e,_)=> print('!!!!!!!!!!!Error : $e'));
+
+      //credential.user!.uid는 Firebase Authentication을 통해 인증된 사용자의 고유 ID
+      // credential :  사용자 인증 후에 반환되는 Firebase 인증 객체입니다.
+      final usersRef = db.collection("users").doc(credential.user!.uid);
+      await usersRef.set(user).then((_) {
+        // 문서 ID를 userId 필드로 업데이트
+        usersRef.update({'userId': usersRef.id}).then((_) {
+          print('User document updated with ID: ${usersRef.id}');
+        });
+      }).catchError((e) {
+        print('Error updating user document: $e');
+      });
 
       final docRef = db.collection("tiles").doc(credential.user!.uid);
       docRef.set(userTile).then((_) {

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'pending_room.dart';
+part of 'room.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,77 +14,74 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-PendingRoom _$PendingRoomFromJson(Map<String, dynamic> json) {
-  return _PendingRoom.fromJson(json);
+Room _$RoomFromJson(Map<String, dynamic> json) {
+  return _Room.fromJson(json);
 }
 
 /// @nodoc
-mixin _$PendingRoom {
-  String get creatorId => throw _privateConstructorUsedError;
+mixin _$Room {
   String get roomId => throw _privateConstructorUsedError;
   String get goalId => throw _privateConstructorUsedError;
+  String get creatorId => throw _privateConstructorUsedError;
   DateTime? get creationDate => throw _privateConstructorUsedError;
   String get roomName => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   String get duration => throw _privateConstructorUsedError;
   List<String> get members => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
 
-  /// Serializes this PendingRoom to a JSON map.
+  /// Serializes this Room to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of PendingRoom
+  /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PendingRoomCopyWith<PendingRoom> get copyWith =>
-      throw _privateConstructorUsedError;
+  $RoomCopyWith<Room> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PendingRoomCopyWith<$Res> {
-  factory $PendingRoomCopyWith(
-          PendingRoom value, $Res Function(PendingRoom) then) =
-      _$PendingRoomCopyWithImpl<$Res, PendingRoom>;
+abstract class $RoomCopyWith<$Res> {
+  factory $RoomCopyWith(Room value, $Res Function(Room) then) =
+      _$RoomCopyWithImpl<$Res, Room>;
   @useResult
   $Res call(
-      {String creatorId,
-      String roomId,
+      {String roomId,
       String goalId,
+      String creatorId,
       DateTime? creationDate,
       String roomName,
       String description,
       String duration,
-      List<String> members});
+      List<String> members,
+      String status});
 }
 
 /// @nodoc
-class _$PendingRoomCopyWithImpl<$Res, $Val extends PendingRoom>
-    implements $PendingRoomCopyWith<$Res> {
-  _$PendingRoomCopyWithImpl(this._value, this._then);
+class _$RoomCopyWithImpl<$Res, $Val extends Room>
+    implements $RoomCopyWith<$Res> {
+  _$RoomCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of PendingRoom
+  /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? creatorId = null,
     Object? roomId = null,
     Object? goalId = null,
+    Object? creatorId = null,
     Object? creationDate = freezed,
     Object? roomName = null,
     Object? description = null,
     Object? duration = null,
     Object? members = null,
+    Object? status = null,
   }) {
     return _then(_value.copyWith(
-      creatorId: null == creatorId
-          ? _value.creatorId
-          : creatorId // ignore: cast_nullable_to_non_nullable
-              as String,
       roomId: null == roomId
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
@@ -92,6 +89,10 @@ class _$PendingRoomCopyWithImpl<$Res, $Val extends PendingRoom>
       goalId: null == goalId
           ? _value.goalId
           : goalId // ignore: cast_nullable_to_non_nullable
+              as String,
+      creatorId: null == creatorId
+          ? _value.creatorId
+          : creatorId // ignore: cast_nullable_to_non_nullable
               as String,
       creationDate: freezed == creationDate
           ? _value.creationDate
@@ -113,56 +114,56 @@ class _$PendingRoomCopyWithImpl<$Res, $Val extends PendingRoom>
           ? _value.members
           : members // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$PendingRoomImplCopyWith<$Res>
-    implements $PendingRoomCopyWith<$Res> {
-  factory _$$PendingRoomImplCopyWith(
-          _$PendingRoomImpl value, $Res Function(_$PendingRoomImpl) then) =
-      __$$PendingRoomImplCopyWithImpl<$Res>;
+abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
+  factory _$$RoomImplCopyWith(
+          _$RoomImpl value, $Res Function(_$RoomImpl) then) =
+      __$$RoomImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String creatorId,
-      String roomId,
+      {String roomId,
       String goalId,
+      String creatorId,
       DateTime? creationDate,
       String roomName,
       String description,
       String duration,
-      List<String> members});
+      List<String> members,
+      String status});
 }
 
 /// @nodoc
-class __$$PendingRoomImplCopyWithImpl<$Res>
-    extends _$PendingRoomCopyWithImpl<$Res, _$PendingRoomImpl>
-    implements _$$PendingRoomImplCopyWith<$Res> {
-  __$$PendingRoomImplCopyWithImpl(
-      _$PendingRoomImpl _value, $Res Function(_$PendingRoomImpl) _then)
+class __$$RoomImplCopyWithImpl<$Res>
+    extends _$RoomCopyWithImpl<$Res, _$RoomImpl>
+    implements _$$RoomImplCopyWith<$Res> {
+  __$$RoomImplCopyWithImpl(_$RoomImpl _value, $Res Function(_$RoomImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of PendingRoom
+  /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? creatorId = null,
     Object? roomId = null,
     Object? goalId = null,
+    Object? creatorId = null,
     Object? creationDate = freezed,
     Object? roomName = null,
     Object? description = null,
     Object? duration = null,
     Object? members = null,
+    Object? status = null,
   }) {
-    return _then(_$PendingRoomImpl(
-      creatorId: null == creatorId
-          ? _value.creatorId
-          : creatorId // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_$RoomImpl(
       roomId: null == roomId
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
@@ -170,6 +171,10 @@ class __$$PendingRoomImplCopyWithImpl<$Res>
       goalId: null == goalId
           ? _value.goalId
           : goalId // ignore: cast_nullable_to_non_nullable
+              as String,
+      creatorId: null == creatorId
+          ? _value.creatorId
+          : creatorId // ignore: cast_nullable_to_non_nullable
               as String,
       creationDate: freezed == creationDate
           ? _value.creationDate
@@ -191,36 +196,41 @@ class __$$PendingRoomImplCopyWithImpl<$Res>
           ? _value._members
           : members // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$PendingRoomImpl implements _PendingRoom {
-  const _$PendingRoomImpl(
-      {this.creatorId = 'creatorId',
-      this.roomId = 'roomId',
+class _$RoomImpl with DiagnosticableTreeMixin implements _Room {
+  const _$RoomImpl(
+      {this.roomId = 'roomId',
       this.goalId = 'goalId',
+      this.creatorId = 'creatorId',
       this.creationDate,
       this.roomName = '방 제목',
       this.description = '방 설명',
       this.duration = '기간',
-      final List<String> members = const []})
+      final List<String> members = const [],
+      this.status = 'pending'})
       : _members = members;
 
-  factory _$PendingRoomImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PendingRoomImplFromJson(json);
+  factory _$RoomImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RoomImplFromJson(json);
 
-  @override
-  @JsonKey()
-  final String creatorId;
   @override
   @JsonKey()
   final String roomId;
   @override
   @JsonKey()
   final String goalId;
+  @override
+  @JsonKey()
+  final String creatorId;
   @override
   final DateTime? creationDate;
   @override
@@ -242,19 +252,39 @@ class _$PendingRoomImpl implements _PendingRoom {
   }
 
   @override
-  String toString() {
-    return 'PendingRoom(creatorId: $creatorId, roomId: $roomId, goalId: $goalId, creationDate: $creationDate, roomName: $roomName, description: $description, duration: $duration, members: $members)';
+  @JsonKey()
+  final String status;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Room(roomId: $roomId, goalId: $goalId, creatorId: $creatorId, creationDate: $creationDate, roomName: $roomName, description: $description, duration: $duration, members: $members, status: $status)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Room'))
+      ..add(DiagnosticsProperty('roomId', roomId))
+      ..add(DiagnosticsProperty('goalId', goalId))
+      ..add(DiagnosticsProperty('creatorId', creatorId))
+      ..add(DiagnosticsProperty('creationDate', creationDate))
+      ..add(DiagnosticsProperty('roomName', roomName))
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('duration', duration))
+      ..add(DiagnosticsProperty('members', members))
+      ..add(DiagnosticsProperty('status', status));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PendingRoomImpl &&
-            (identical(other.creatorId, creatorId) ||
-                other.creatorId == creatorId) &&
+            other is _$RoomImpl &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
             (identical(other.goalId, goalId) || other.goalId == goalId) &&
+            (identical(other.creatorId, creatorId) ||
+                other.creatorId == creatorId) &&
             (identical(other.creationDate, creationDate) ||
                 other.creationDate == creationDate) &&
             (identical(other.roomName, roomName) ||
@@ -263,58 +293,60 @@ class _$PendingRoomImpl implements _PendingRoom {
                 other.description == description) &&
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
-            const DeepCollectionEquality().equals(other._members, _members));
+            const DeepCollectionEquality().equals(other._members, _members) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      creatorId,
       roomId,
       goalId,
+      creatorId,
       creationDate,
       roomName,
       description,
       duration,
-      const DeepCollectionEquality().hash(_members));
+      const DeepCollectionEquality().hash(_members),
+      status);
 
-  /// Create a copy of PendingRoom
+  /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PendingRoomImplCopyWith<_$PendingRoomImpl> get copyWith =>
-      __$$PendingRoomImplCopyWithImpl<_$PendingRoomImpl>(this, _$identity);
+  _$$RoomImplCopyWith<_$RoomImpl> get copyWith =>
+      __$$RoomImplCopyWithImpl<_$RoomImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PendingRoomImplToJson(
+    return _$$RoomImplToJson(
       this,
     );
   }
 }
 
-abstract class _PendingRoom implements PendingRoom {
-  const factory _PendingRoom(
-      {final String creatorId,
-      final String roomId,
+abstract class _Room implements Room {
+  const factory _Room(
+      {final String roomId,
       final String goalId,
+      final String creatorId,
       final DateTime? creationDate,
       final String roomName,
       final String description,
       final String duration,
-      final List<String> members}) = _$PendingRoomImpl;
+      final List<String> members,
+      final String status}) = _$RoomImpl;
 
-  factory _PendingRoom.fromJson(Map<String, dynamic> json) =
-      _$PendingRoomImpl.fromJson;
+  factory _Room.fromJson(Map<String, dynamic> json) = _$RoomImpl.fromJson;
 
-  @override
-  String get creatorId;
   @override
   String get roomId;
   @override
   String get goalId;
+  @override
+  String get creatorId;
   @override
   DateTime? get creationDate;
   @override
@@ -325,11 +357,13 @@ abstract class _PendingRoom implements PendingRoom {
   String get duration;
   @override
   List<String> get members;
+  @override
+  String get status;
 
-  /// Create a copy of PendingRoom
+  /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PendingRoomImplCopyWith<_$PendingRoomImpl> get copyWith =>
+  _$$RoomImplCopyWith<_$RoomImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

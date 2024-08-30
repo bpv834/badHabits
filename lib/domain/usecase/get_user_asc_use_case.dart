@@ -1,4 +1,4 @@
-import 'package:bhgh/domain/model/user.dart';
+import 'package:bhgh/domain/model/user_model.dart';
 import 'package:injectable/injectable.dart';
 
 import '../repository/user_repository.dart';
@@ -9,7 +9,7 @@ class GetUserAscUseCase {
 
   GetUserAscUseCase(this._userRepository);
 
-  Future<List<User>> execute() async {
+  Future<List<UserModel>> execute() async {
     final users = await _userRepository.getUsers();
     print('users = $users');
     return users;

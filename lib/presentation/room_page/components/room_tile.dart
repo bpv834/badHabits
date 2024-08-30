@@ -2,7 +2,7 @@ import 'package:bhgh/presentation/room_page/room_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PendingRoomTile extends StatelessWidget {
+class RoomTile extends StatelessWidget {
   final String creationDate;
   final String creatorId;
   final String description;
@@ -11,7 +11,7 @@ class PendingRoomTile extends StatelessWidget {
   final String roomName;
   final String roomId;
 
-  const PendingRoomTile({
+  const RoomTile({
     Key? key,
     required this.creationDate,
     required this.creatorId,

@@ -20,7 +20,7 @@ RoomState _$RoomStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RoomState {
-  List<PendingRoom> get rooms => throw _privateConstructorUsedError;
+  List<Room> get rooms => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
 
   /// Serializes this RoomState to a JSON map.
@@ -38,7 +38,7 @@ abstract class $RoomStateCopyWith<$Res> {
   factory $RoomStateCopyWith(RoomState value, $Res Function(RoomState) then) =
       _$RoomStateCopyWithImpl<$Res, RoomState>;
   @useResult
-  $Res call({List<PendingRoom> rooms, bool isLoading});
+  $Res call({List<Room> rooms, bool isLoading});
 }
 
 /// @nodoc
@@ -63,7 +63,7 @@ class _$RoomStateCopyWithImpl<$Res, $Val extends RoomState>
       rooms: null == rooms
           ? _value.rooms
           : rooms // ignore: cast_nullable_to_non_nullable
-              as List<PendingRoom>,
+              as List<Room>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,7 @@ abstract class _$$RoomStateImplCopyWith<$Res>
       __$$RoomStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<PendingRoom> rooms, bool isLoading});
+  $Res call({List<Room> rooms, bool isLoading});
 }
 
 /// @nodoc
@@ -103,7 +103,7 @@ class __$$RoomStateImplCopyWithImpl<$Res>
       rooms: null == rooms
           ? _value._rooms
           : rooms // ignore: cast_nullable_to_non_nullable
-              as List<PendingRoom>,
+              as List<Room>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -116,16 +116,16 @@ class __$$RoomStateImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RoomStateImpl with DiagnosticableTreeMixin implements _RoomState {
   const _$RoomStateImpl(
-      {final List<PendingRoom> rooms = const [], this.isLoading = false})
+      {final List<Room> rooms = const [], this.isLoading = false})
       : _rooms = rooms;
 
   factory _$RoomStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$RoomStateImplFromJson(json);
 
-  final List<PendingRoom> _rooms;
+  final List<Room> _rooms;
   @override
   @JsonKey()
-  List<PendingRoom> get rooms {
+  List<Room> get rooms {
     if (_rooms is EqualUnmodifiableListView) return _rooms;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_rooms);
@@ -181,14 +181,14 @@ class _$RoomStateImpl with DiagnosticableTreeMixin implements _RoomState {
 }
 
 abstract class _RoomState implements RoomState {
-  const factory _RoomState(
-      {final List<PendingRoom> rooms, final bool isLoading}) = _$RoomStateImpl;
+  const factory _RoomState({final List<Room> rooms, final bool isLoading}) =
+      _$RoomStateImpl;
 
   factory _RoomState.fromJson(Map<String, dynamic> json) =
       _$RoomStateImpl.fromJson;
 
   @override
-  List<PendingRoom> get rooms;
+  List<Room> get rooms;
   @override
   bool get isLoading;
 

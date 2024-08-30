@@ -1,4 +1,5 @@
-import 'package:bhgh/presentation/room_page/components/pending_room_tile.dart';
+
+import 'package:bhgh/presentation/room_page/components/room_tile.dart';
 import 'package:bhgh/presentation/room_page/room_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,7 @@ class RoomScreen extends StatelessWidget {
                     itemBuilder: (BuildContext context, int idx) {
                       return ChangeNotifierProvider(
                         create: (_) => RoomViewModel(null),
-                        child: PendingRoomTile(
+                        child: RoomTile(
                           creationDate: state.rooms[idx].creationDate.toString(),
                           creatorId: state.rooms[idx].creatorId,
                           description: state.rooms[idx].description,

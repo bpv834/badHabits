@@ -1,5 +1,5 @@
-import 'package:bhgh/domain/model/user.dart';
+import 'package:bhgh/domain/model/user_model.dart';
 
 abstract interface class UserRepository{
-Future<List<User>> getUsers();
+Future<List<UserModel>> getUsers();
 }

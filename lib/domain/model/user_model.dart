@@ -1,13 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part 'user.freezed.dart';
+part 'user_model.freezed.dart';
 
-part 'user.g.dart';
+part 'user_model.g.dart';
 
 @freezed
-class User with _$User {
-  const factory User({
+class UserModel with _$UserModel {
+  const factory UserModel({
+    @Default('userId') String userId,
     @Default('email') String email,
     @Default('name') String name,
     @Default('rrn') String rrn,
@@ -16,7 +17,7 @@ class User with _$User {
     @Default(0) int age,
     @Default([]) List<String> habits,
     @Default([]) List<String> joinedRooms,
-  }) = _User;
+  }) = _UserModel;
 
-  factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
+  factory UserModel.fromJson(Map<String, Object?> json) => _$UserModelFromJson(json);
 }

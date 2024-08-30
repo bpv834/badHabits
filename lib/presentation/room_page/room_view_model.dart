@@ -1,5 +1,5 @@
-import 'package:bhgh/domain/model/pending_room.dart';
-import 'package:bhgh/domain/usecase/get_pending_room_use_case.dart';
+import 'package:bhgh/domain/model/room.dart';
+import 'package:bhgh/domain/usecase/get_rooms_use_case.dart';
 import 'package:bhgh/presentation/room_page/components/create_room_dialog.dart';
 import 'package:bhgh/presentation/room_page/room_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,8 +11,8 @@ import 'package:provider/provider.dart';
 @injectable
 class RoomViewModel with ChangeNotifier {
   //방 목록 불러오기 생성자를 통해
-  RoomViewModel(this._pendingRoomUseCase) {
-    if (_pendingRoomUseCase == null) {
+  RoomViewModel(this._roomUseCase) {
+    if (_roomUseCase == null) {
       print('_pendingRoomUseCase = null');
     } else {
       print('RoomViewModel');
@@ -20,7 +20,7 @@ class RoomViewModel with ChangeNotifier {
     }
   }
 
-  final GetPendingRoomUseCase? _pendingRoomUseCase;
+  final GetRoomsUseCase? _roomUseCase;
 
   //상태와 getter
   RoomState _state = const RoomState();
@@ -29,7 +29,7 @@ class RoomViewModel with ChangeNotifier {
 
   Future<void> joinRoomAsId(String roomId,BuildContext context) async {
     final roomsDoc =
-        FirebaseFirestore.instance.collection('pendingRooms').doc(roomId);
+        FirebaseFirestore.instance.collection('rooms').doc(roomId);
 
     // Transaction을 사용하여 필드 업데이트
     FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -70,7 +70,7 @@ class RoomViewModel with ChangeNotifier {
     _state = _state.copyWith(isLoading: true);
     notifyListeners();
     //데이터 불러와 로딩중 해제
-    List<PendingRoom> result = await _pendingRoomUseCase!.execute();
+    List<Room> result = await _roomUseCase!.execute();
     _state = _state.copyWith(rooms: result, isLoading: false);
     notifyListeners();
     print('state.Rooms: ${_state.rooms}');
@@ -80,7 +80,7 @@ class RoomViewModel with ChangeNotifier {
     showDialog(
       context: context,
       builder: (context) => ChangeNotifierProvider(
-        create: (_) => RoomViewModel(_pendingRoomUseCase),
+        create: (_) => RoomViewModel(_roomUseCase),
         child: CreateRoomDialog(),
       ),
     );
@@ -97,17 +97,15 @@ class RoomViewModel with ChangeNotifier {
       final goalRef = await db.collection('goals').add({
         "goalId": '', // 나중에 업데이트 될 예정
         "badHabit": badHabit,
-        "description": description,
-        'creationDate': DateTime.now(), // 현재 날짜와 시간
+        'startDate': DateTime.now(), // 현재 날짜와 시간
         'targetDate': null, // 나중에 설정할 수 있도록 null
         'progress': {}, // 초기에는 빈 맵
-        'status': 'pending', // 목표 상태
       });
 
       final goalId = goalRef.id;
 
       // 방을 생성합니다.
-      final roomRef = await db.collection('pendingRooms').add({
+      final roomRef = await db.collection('rooms').add({
         "roomId": '', // 나중에 업데이트 될 예정
         "goalId": goalId, // 방과 연결된 목표의 ID
         "creatorId": FirebaseAuth.instance.currentUser!.uid, // 현재 로그인한 사용자의 ID
@@ -116,6 +114,7 @@ class RoomViewModel with ChangeNotifier {
         "description": description,
         "duration": duration, // 목표기간
         "members": ['${FirebaseAuth.instance.currentUser!.uid}'],
+        "status" : 'pending'
       });
 
       final roomId = roomRef.id;

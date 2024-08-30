@@ -5,17 +5,16 @@ import '../model/room.dart';
 import '../repository/room_repository.dart';
 
 @singleton
-class GetMyCreationRoomsUseCase {
+class GetMyRunningRoomsUseCase {
   final RoomRepository _roomRepository;
 
-  GetMyCreationRoomsUseCase({required RoomRepository roomRepository})
+  GetMyRunningRoomsUseCase({required RoomRepository roomRepository})
       : _roomRepository = roomRepository;
 
   Future<List<Room>> execute() async {
     List<Room> list =await _roomRepository.getRooms();
-    List<Room> creationList = list.where((room)=>room.creatorId == FirebaseAuth.instance.currentUser!.uid).toList();
-    print('creationList: $creationList');
-
-   return creationList;
+    List<Room> runningRooms = list.where((room)=>room.members.contains( FirebaseAuth.instance.currentUser!.uid)).where((room)=>room.status == "running").toList();
+    print('runningRooms: $runningRooms');
+    return runningRooms;
   }
 }

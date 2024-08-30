@@ -21,10 +21,9 @@ Goal _$GoalFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Goal {
   String get goalId => throw _privateConstructorUsedError; // 목표의 고유 ID
-  String get name => throw _privateConstructorUsedError; // 목표의 이름
-  String get description => throw _privateConstructorUsedError; // 목표에 대한 설명
+  String get badHabit => throw _privateConstructorUsedError; // 목표의 이름
   DateTime? get startDate => throw _privateConstructorUsedError; // 목표 시작일
-  DateTime? get endDate => throw _privateConstructorUsedError; // 목표 종료일
+  DateTime? get targetDate => throw _privateConstructorUsedError; // 목표 종료일
   Map<String, List<bool>>? get progress => throw _privateConstructorUsedError;
 
   /// Serializes this Goal to a JSON map.
@@ -43,10 +42,9 @@ abstract class $GoalCopyWith<$Res> {
   @useResult
   $Res call(
       {String goalId,
-      String name,
-      String description,
+      String badHabit,
       DateTime? startDate,
-      DateTime? endDate,
+      DateTime? targetDate,
       Map<String, List<bool>>? progress});
 }
 
@@ -66,10 +64,9 @@ class _$GoalCopyWithImpl<$Res, $Val extends Goal>
   @override
   $Res call({
     Object? goalId = null,
-    Object? name = null,
-    Object? description = null,
+    Object? badHabit = null,
     Object? startDate = freezed,
-    Object? endDate = freezed,
+    Object? targetDate = freezed,
     Object? progress = freezed,
   }) {
     return _then(_value.copyWith(
@@ -77,21 +74,17 @@ class _$GoalCopyWithImpl<$Res, $Val extends Goal>
           ? _value.goalId
           : goalId // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      badHabit: null == badHabit
+          ? _value.badHabit
+          : badHabit // ignore: cast_nullable_to_non_nullable
               as String,
       startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      endDate: freezed == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
+      targetDate: freezed == targetDate
+          ? _value.targetDate
+          : targetDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       progress: freezed == progress
           ? _value.progress
@@ -110,10 +103,9 @@ abstract class _$$GoalImplCopyWith<$Res> implements $GoalCopyWith<$Res> {
   @useResult
   $Res call(
       {String goalId,
-      String name,
-      String description,
+      String badHabit,
       DateTime? startDate,
-      DateTime? endDate,
+      DateTime? targetDate,
       Map<String, List<bool>>? progress});
 }
 
@@ -130,10 +122,9 @@ class __$$GoalImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? goalId = null,
-    Object? name = null,
-    Object? description = null,
+    Object? badHabit = null,
     Object? startDate = freezed,
-    Object? endDate = freezed,
+    Object? targetDate = freezed,
     Object? progress = freezed,
   }) {
     return _then(_$GoalImpl(
@@ -141,21 +132,17 @@ class __$$GoalImplCopyWithImpl<$Res>
           ? _value.goalId
           : goalId // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      badHabit: null == badHabit
+          ? _value.badHabit
+          : badHabit // ignore: cast_nullable_to_non_nullable
               as String,
       startDate: freezed == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      endDate: freezed == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
+      targetDate: freezed == targetDate
+          ? _value.targetDate
+          : targetDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       progress: freezed == progress
           ? _value._progress
@@ -170,10 +157,9 @@ class __$$GoalImplCopyWithImpl<$Res>
 class _$GoalImpl with DiagnosticableTreeMixin implements _Goal {
   const _$GoalImpl(
       {this.goalId = 'id',
-      this.name = 'name',
-      this.description = 'des',
+      this.badHabit = 'habit name',
       this.startDate,
-      this.endDate,
+      this.targetDate,
       final Map<String, List<bool>>? progress})
       : _progress = progress;
 
@@ -186,17 +172,13 @@ class _$GoalImpl with DiagnosticableTreeMixin implements _Goal {
 // 목표의 고유 ID
   @override
   @JsonKey()
-  final String name;
+  final String badHabit;
 // 목표의 이름
-  @override
-  @JsonKey()
-  final String description;
-// 목표에 대한 설명
   @override
   final DateTime? startDate;
 // 목표 시작일
   @override
-  final DateTime? endDate;
+  final DateTime? targetDate;
 // 목표 종료일
   final Map<String, List<bool>>? _progress;
 // 목표 종료일
@@ -211,7 +193,7 @@ class _$GoalImpl with DiagnosticableTreeMixin implements _Goal {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Goal(goalId: $goalId, name: $name, description: $description, startDate: $startDate, endDate: $endDate, progress: $progress)';
+    return 'Goal(goalId: $goalId, badHabit: $badHabit, startDate: $startDate, targetDate: $targetDate, progress: $progress)';
   }
 
   @override
@@ -220,10 +202,9 @@ class _$GoalImpl with DiagnosticableTreeMixin implements _Goal {
     properties
       ..add(DiagnosticsProperty('type', 'Goal'))
       ..add(DiagnosticsProperty('goalId', goalId))
-      ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('badHabit', badHabit))
       ..add(DiagnosticsProperty('startDate', startDate))
-      ..add(DiagnosticsProperty('endDate', endDate))
+      ..add(DiagnosticsProperty('targetDate', targetDate))
       ..add(DiagnosticsProperty('progress', progress));
   }
 
@@ -233,19 +214,19 @@ class _$GoalImpl with DiagnosticableTreeMixin implements _Goal {
         (other.runtimeType == runtimeType &&
             other is _$GoalImpl &&
             (identical(other.goalId, goalId) || other.goalId == goalId) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.badHabit, badHabit) ||
+                other.badHabit == badHabit) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
-            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.targetDate, targetDate) ||
+                other.targetDate == targetDate) &&
             const DeepCollectionEquality().equals(other._progress, _progress));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, goalId, name, description,
-      startDate, endDate, const DeepCollectionEquality().hash(_progress));
+  int get hashCode => Object.hash(runtimeType, goalId, badHabit, startDate,
+      targetDate, const DeepCollectionEquality().hash(_progress));
 
   /// Create a copy of Goal
   /// with the given fields replaced by the non-null parameter values.
@@ -266,10 +247,9 @@ class _$GoalImpl with DiagnosticableTreeMixin implements _Goal {
 abstract class _Goal implements Goal {
   const factory _Goal(
       {final String goalId,
-      final String name,
-      final String description,
+      final String badHabit,
       final DateTime? startDate,
-      final DateTime? endDate,
+      final DateTime? targetDate,
       final Map<String, List<bool>>? progress}) = _$GoalImpl;
 
   factory _Goal.fromJson(Map<String, dynamic> json) = _$GoalImpl.fromJson;
@@ -277,13 +257,11 @@ abstract class _Goal implements Goal {
   @override
   String get goalId; // 목표의 고유 ID
   @override
-  String get name; // 목표의 이름
-  @override
-  String get description; // 목표에 대한 설명
+  String get badHabit; // 목표의 이름
   @override
   DateTime? get startDate; // 목표 시작일
   @override
-  DateTime? get endDate; // 목표 종료일
+  DateTime? get targetDate; // 목표 종료일
   @override
   Map<String, List<bool>>? get progress;
 
