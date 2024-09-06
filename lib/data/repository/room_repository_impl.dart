@@ -23,6 +23,4 @@ class RoomRepositoryImpl implements RoomRepository {
     print('PendingRoomRepositoryImpl에서 Result :$result');
     return result;
   }
-
-
 }

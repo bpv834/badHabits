@@ -1,5 +1,3 @@
-
-
 import 'package:bhgh/domain/model/user_model.dart';
 import 'package:bhgh/domain/usecase/get_my_complete_rooms_use_case.dart';
 import 'package:bhgh/domain/usecase/get_my_creation_rooms_use_case.dart';
@@ -12,8 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/model/room.dart';
-
-
 
 @injectable
 class MyViewModel with ChangeNotifier {
@@ -32,12 +28,13 @@ class MyViewModel with ChangeNotifier {
   ) {
     getMyRooms();
     getMyProfile();
-
   }
 
   MyState _state = const MyState(user: null);
 
   MyState get state => _state;
+
+
 
   Future<void> getMyRooms() async {
     //loading중으로 변경후
@@ -63,13 +60,16 @@ class MyViewModel with ChangeNotifier {
     notifyListeners();
 
     final users = await _getUserAscUseCase.execute();
-    final user =  users
-        .where((UserModel user) => user.userId == FirebaseAuth.instance.currentUser!.uid)
+    final user = users
+        .where((UserModel user) =>
+            user.userId == FirebaseAuth.instance.currentUser!.uid)
         .toList()
         .first;
-    _state= _state.copyWith(user: user);
+    _state = _state.copyWith(user: user);
     notifyListeners();
   }
 
+  Future<void> convertingToRunning() async{
 
+  }
 }

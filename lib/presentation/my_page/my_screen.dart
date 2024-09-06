@@ -1,4 +1,11 @@
+import 'package:bhgh/data/repository/room_repository_impl.dart';
+import 'package:bhgh/data/repository/user_repository_impl.dart';
 import 'package:bhgh/domain/model/user_model.dart';
+import 'package:bhgh/domain/usecase/get_my_complete_rooms_use_case.dart';
+import 'package:bhgh/domain/usecase/get_my_creation_rooms_use_case.dart';
+import 'package:bhgh/domain/usecase/get_my_pending_rooms_use_case.dart';
+import 'package:bhgh/domain/usecase/get_my_running_rooms_use_case.dart';
+import 'package:bhgh/domain/usecase/get_user_asc_use_case.dart';
 import 'package:bhgh/presentation/my_page/components/profile_card.dart';
 import 'package:bhgh/presentation/my_page/my_view_model.dart';
 import 'package:flutter/material.dart';
@@ -47,20 +54,34 @@ class MyScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 16), // Space between lists
                     // 내가 만든 방 목록
-                    Container(
+                    SizedBox(
                       height: 250, // Adjust height as needed
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: state.myCreationRooms.length,
                         itemBuilder: (BuildContext context, int index) {
                           final creationRoom = state.myCreationRooms[index];
-                          return RoomCard(
-                            roomName: creationRoom.roomName,
-                            description: creationRoom.description,
-                            creationDate: creationRoom.creationDate.toString(),
-                            status: creationRoom.status,
-                            members: creationRoom.members.length,
-                          );
+                          return ChangeNotifierProvider(
+                              create: (_) => MyViewModel(
+                                  GetMyCreationRoomsUseCase(
+                                      roomRepository: RoomRepositoryImpl()),
+                                  GetMyPendingRoomsUseCase(
+                                      roomRepository: RoomRepositoryImpl()),
+                                  GetMyRunningRoomsUseCase(
+                                      roomRepository: RoomRepositoryImpl()),
+                                  GetMyCompleteRoomsUseCase(
+                                      roomRepository: RoomRepositoryImpl()),
+                                  GetUserAscUseCase(UserRepositoryImpl())),
+                              child: RoomCard(
+                                roomName: creationRoom.roomName,
+                                description: creationRoom.description,
+                                creationDate:
+                                    creationRoom.creationDate.toString(),
+                                status: creationRoom.status,
+                                members: creationRoom.members.length,
+                                roomStatus: 'my creation',
+                                roomId: creationRoom.roomId,
+                              ));
                         },
                       ),
                     ),
@@ -88,6 +109,8 @@ class MyScreen extends StatelessWidget {
                             creationDate: pendingRoom.creationDate.toString(),
                             status: pendingRoom.status,
                             members: pendingRoom.members.length,
+                            roomStatus: 'my pending',
+                            roomId: pendingRoom.roomId,
                           );
                         },
                       ),
@@ -110,13 +133,15 @@ class MyScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: state.myRunningRooms.length,
                         itemBuilder: (BuildContext context, int index) {
-                          final runningRoom = state.myCreationRooms[index];
+                          final runningRoom = state.myRunningRooms[index];
                           return RoomCard(
                             roomName: runningRoom.roomName,
                             description: runningRoom.description,
                             creationDate: runningRoom.creationDate.toString(),
                             status: runningRoom.status,
                             members: runningRoom.members.length,
+                            roomStatus: 'my running',
+                            roomId: runningRoom.roomId,
                           );
                         },
                       ),
@@ -146,6 +171,8 @@ class MyScreen extends StatelessWidget {
                             creationDate: completeRoom.creationDate.toString(),
                             status: completeRoom.status,
                             members: completeRoom.members.length,
+                            roomStatus: 'my completed',
+                            roomId: completeRoom.roomId,
                           );
                         },
                       ),
