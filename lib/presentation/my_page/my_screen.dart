@@ -1,6 +1,5 @@
 import 'package:bhgh/data/repository/room_repository_impl.dart';
 import 'package:bhgh/data/repository/user_repository_impl.dart';
-import 'package:bhgh/domain/model/user_model.dart';
 import 'package:bhgh/domain/usecase/get_my_complete_rooms_use_case.dart';
 import 'package:bhgh/domain/usecase/get_my_creation_rooms_use_case.dart';
 import 'package:bhgh/domain/usecase/get_my_pending_rooms_use_case.dart';
@@ -81,6 +80,7 @@ class MyScreen extends StatelessWidget {
                                 members: creationRoom.members.length,
                                 roomStatus: 'my creation',
                                 roomId: creationRoom.roomId,
+                                leftDay: null,
                               ));
                         },
                       ),
@@ -111,6 +111,7 @@ class MyScreen extends StatelessWidget {
                             members: pendingRoom.members.length,
                             roomStatus: 'my pending',
                             roomId: pendingRoom.roomId,
+                            leftDay: null,
                           );
                         },
                       ),
@@ -142,6 +143,7 @@ class MyScreen extends StatelessWidget {
                             members: runningRoom.members.length,
                             roomStatus: 'my running',
                             roomId: runningRoom.roomId,
+                            leftDay: viewModel.culLeftDay(runningRoom.startDate!, runningRoom.targetDate!),
                           );
                         },
                       ),
@@ -173,6 +175,7 @@ class MyScreen extends StatelessWidget {
                             members: completeRoom.members.length,
                             roomStatus: 'my completed',
                             roomId: completeRoom.roomId,
+                            leftDay: null,
                           );
                         },
                       ),

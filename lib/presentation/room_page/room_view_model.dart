@@ -93,34 +93,26 @@ class RoomViewModel with ChangeNotifier {
   Future<void> createRoom(String roomName, String badHabit, String description,
       String duration) async {
     try {
-      // 목표를 생성합니다.
-      final goalRef = await db.collection('goals').add({
-        "goalId": '', // 나중에 업데이트 될 예정
-        "badHabit": badHabit,
-        'startDate': DateTime.now(), // 현재 날짜와 시간
-        'targetDate': null, // 나중에 설정할 수 있도록 null
-        'progress': {}, // 초기에는 빈 맵
-      });
-
-      final goalId = goalRef.id;
 
       // 방을 생성합니다.
       final roomRef = await db.collection('rooms').add({
         "roomId": '', // 나중에 업데이트 될 예정
-        "goalId": goalId, // 방과 연결된 목표의 ID
         "creatorId": FirebaseAuth.instance.currentUser!.uid, // 현재 로그인한 사용자의 ID
         'creationDate': Timestamp.now(), // 현재 날짜와 시간
         "roomName": roomName,
         "description": description,
         "duration": duration, // 목표기간
         "members": ['${FirebaseAuth.instance.currentUser!.uid}'],
-        "status" : 'pending'
+        "status" : 'pending',
+        "badHabit": badHabit,
+        'startDate': null, // 현재 날짜와 시간
+        'targetDate': null, // 나중에 설정할 수 있도록 null
+        'progress': {}, // 초기에는 빈 맵
       });
 
       final roomId = roomRef.id;
 
       // 목표와 방 문서에 ID를 업데이트합니다.
-      await goalRef.update({'goalId': goalId});
       await roomRef.update({'roomId': roomId});
 
       // 사용자의 joinedRoom 필드 업데이트
@@ -131,7 +123,7 @@ class RoomViewModel with ChangeNotifier {
       });
 
       print(
-          'DocumentSnapshot added with Goal ID: $goalId and Room ID: $roomId');
+          'DocumentSnapshot added and Room ID: $roomId');
     } catch (e) {
       print('에러 발생: $e');
     }

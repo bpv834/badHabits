@@ -17,6 +17,12 @@ class RoomRepositoryImpl implements RoomRepository {
       if (data['creationDate'] is Timestamp) {
         data['creationDate'] = (data['creationDate'] as Timestamp).toDate().toIso8601String();
       }
+      if (data['startDate'] is Timestamp) {
+        data['startDate'] = (data['startDate'] as Timestamp).toDate().toIso8601String();
+      }
+      if (data['targetDate'] is Timestamp) {
+        data['targetDate'] = (data['targetDate'] as Timestamp).toDate().toIso8601String();
+      }
       print('After modification: $data');
       return Room.fromJson(data);
     }).toList();

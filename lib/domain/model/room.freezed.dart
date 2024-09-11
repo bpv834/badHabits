@@ -21,14 +21,17 @@ Room _$RoomFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Room {
   String get roomId => throw _privateConstructorUsedError;
-  String get goalId => throw _privateConstructorUsedError;
   String get creatorId => throw _privateConstructorUsedError;
-  DateTime? get creationDate => throw _privateConstructorUsedError;
   String get roomName => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   String get duration => throw _privateConstructorUsedError;
   List<String> get members => throw _privateConstructorUsedError;
+  Map<String, List<bool>>? get progress => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
+  String get badHabit => throw _privateConstructorUsedError;
+  DateTime? get creationDate => throw _privateConstructorUsedError;
+  DateTime? get startDate => throw _privateConstructorUsedError;
+  DateTime? get targetDate => throw _privateConstructorUsedError;
 
   /// Serializes this Room to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,14 +49,17 @@ abstract class $RoomCopyWith<$Res> {
   @useResult
   $Res call(
       {String roomId,
-      String goalId,
       String creatorId,
-      DateTime? creationDate,
       String roomName,
       String description,
       String duration,
       List<String> members,
-      String status});
+      Map<String, List<bool>>? progress,
+      String status,
+      String badHabit,
+      DateTime? creationDate,
+      DateTime? startDate,
+      DateTime? targetDate});
 }
 
 /// @nodoc
@@ -72,32 +78,27 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
   @override
   $Res call({
     Object? roomId = null,
-    Object? goalId = null,
     Object? creatorId = null,
-    Object? creationDate = freezed,
     Object? roomName = null,
     Object? description = null,
     Object? duration = null,
     Object? members = null,
+    Object? progress = freezed,
     Object? status = null,
+    Object? badHabit = null,
+    Object? creationDate = freezed,
+    Object? startDate = freezed,
+    Object? targetDate = freezed,
   }) {
     return _then(_value.copyWith(
       roomId: null == roomId
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      goalId: null == goalId
-          ? _value.goalId
-          : goalId // ignore: cast_nullable_to_non_nullable
-              as String,
       creatorId: null == creatorId
           ? _value.creatorId
           : creatorId // ignore: cast_nullable_to_non_nullable
               as String,
-      creationDate: freezed == creationDate
-          ? _value.creationDate
-          : creationDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       roomName: null == roomName
           ? _value.roomName
           : roomName // ignore: cast_nullable_to_non_nullable
@@ -114,10 +115,30 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
           ? _value.members
           : members // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      progress: freezed == progress
+          ? _value.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<bool>>?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
+      badHabit: null == badHabit
+          ? _value.badHabit
+          : badHabit // ignore: cast_nullable_to_non_nullable
+              as String,
+      creationDate: freezed == creationDate
+          ? _value.creationDate
+          : creationDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      targetDate: freezed == targetDate
+          ? _value.targetDate
+          : targetDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -131,14 +152,17 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
   @useResult
   $Res call(
       {String roomId,
-      String goalId,
       String creatorId,
-      DateTime? creationDate,
       String roomName,
       String description,
       String duration,
       List<String> members,
-      String status});
+      Map<String, List<bool>>? progress,
+      String status,
+      String badHabit,
+      DateTime? creationDate,
+      DateTime? startDate,
+      DateTime? targetDate});
 }
 
 /// @nodoc
@@ -154,32 +178,27 @@ class __$$RoomImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? roomId = null,
-    Object? goalId = null,
     Object? creatorId = null,
-    Object? creationDate = freezed,
     Object? roomName = null,
     Object? description = null,
     Object? duration = null,
     Object? members = null,
+    Object? progress = freezed,
     Object? status = null,
+    Object? badHabit = null,
+    Object? creationDate = freezed,
+    Object? startDate = freezed,
+    Object? targetDate = freezed,
   }) {
     return _then(_$RoomImpl(
       roomId: null == roomId
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String,
-      goalId: null == goalId
-          ? _value.goalId
-          : goalId // ignore: cast_nullable_to_non_nullable
-              as String,
       creatorId: null == creatorId
           ? _value.creatorId
           : creatorId // ignore: cast_nullable_to_non_nullable
               as String,
-      creationDate: freezed == creationDate
-          ? _value.creationDate
-          : creationDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       roomName: null == roomName
           ? _value.roomName
           : roomName // ignore: cast_nullable_to_non_nullable
@@ -196,10 +215,30 @@ class __$$RoomImplCopyWithImpl<$Res>
           ? _value._members
           : members // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      progress: freezed == progress
+          ? _value._progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<bool>>?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String,
+      badHabit: null == badHabit
+          ? _value.badHabit
+          : badHabit // ignore: cast_nullable_to_non_nullable
+              as String,
+      creationDate: freezed == creationDate
+          ? _value.creationDate
+          : creationDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      targetDate: freezed == targetDate
+          ? _value.targetDate
+          : targetDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -209,15 +248,19 @@ class __$$RoomImplCopyWithImpl<$Res>
 class _$RoomImpl with DiagnosticableTreeMixin implements _Room {
   const _$RoomImpl(
       {this.roomId = 'roomId',
-      this.goalId = 'goalId',
       this.creatorId = 'creatorId',
-      this.creationDate,
       this.roomName = '방 제목',
       this.description = '방 설명',
       this.duration = '기간',
       final List<String> members = const [],
-      this.status = 'pending'})
-      : _members = members;
+      final Map<String, List<bool>>? progress,
+      this.status = 'pending',
+      this.badHabit = '고칠 습관',
+      this.creationDate,
+      this.startDate,
+      this.targetDate})
+      : _members = members,
+        _progress = progress;
 
   factory _$RoomImpl.fromJson(Map<String, dynamic> json) =>
       _$$RoomImplFromJson(json);
@@ -227,12 +270,7 @@ class _$RoomImpl with DiagnosticableTreeMixin implements _Room {
   final String roomId;
   @override
   @JsonKey()
-  final String goalId;
-  @override
-  @JsonKey()
   final String creatorId;
-  @override
-  final DateTime? creationDate;
   @override
   @JsonKey()
   final String roomName;
@@ -251,13 +289,32 @@ class _$RoomImpl with DiagnosticableTreeMixin implements _Room {
     return EqualUnmodifiableListView(_members);
   }
 
+  final Map<String, List<bool>>? _progress;
+  @override
+  Map<String, List<bool>>? get progress {
+    final value = _progress;
+    if (value == null) return null;
+    if (_progress is EqualUnmodifiableMapView) return _progress;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
   @JsonKey()
   final String status;
+  @override
+  @JsonKey()
+  final String badHabit;
+  @override
+  final DateTime? creationDate;
+  @override
+  final DateTime? startDate;
+  @override
+  final DateTime? targetDate;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Room(roomId: $roomId, goalId: $goalId, creatorId: $creatorId, creationDate: $creationDate, roomName: $roomName, description: $description, duration: $duration, members: $members, status: $status)';
+    return 'Room(roomId: $roomId, creatorId: $creatorId, roomName: $roomName, description: $description, duration: $duration, members: $members, progress: $progress, status: $status, badHabit: $badHabit, creationDate: $creationDate, startDate: $startDate, targetDate: $targetDate)';
   }
 
   @override
@@ -266,14 +323,17 @@ class _$RoomImpl with DiagnosticableTreeMixin implements _Room {
     properties
       ..add(DiagnosticsProperty('type', 'Room'))
       ..add(DiagnosticsProperty('roomId', roomId))
-      ..add(DiagnosticsProperty('goalId', goalId))
       ..add(DiagnosticsProperty('creatorId', creatorId))
-      ..add(DiagnosticsProperty('creationDate', creationDate))
       ..add(DiagnosticsProperty('roomName', roomName))
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('duration', duration))
       ..add(DiagnosticsProperty('members', members))
-      ..add(DiagnosticsProperty('status', status));
+      ..add(DiagnosticsProperty('progress', progress))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('badHabit', badHabit))
+      ..add(DiagnosticsProperty('creationDate', creationDate))
+      ..add(DiagnosticsProperty('startDate', startDate))
+      ..add(DiagnosticsProperty('targetDate', targetDate));
   }
 
   @override
@@ -282,11 +342,8 @@ class _$RoomImpl with DiagnosticableTreeMixin implements _Room {
         (other.runtimeType == runtimeType &&
             other is _$RoomImpl &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
-            (identical(other.goalId, goalId) || other.goalId == goalId) &&
             (identical(other.creatorId, creatorId) ||
                 other.creatorId == creatorId) &&
-            (identical(other.creationDate, creationDate) ||
-                other.creationDate == creationDate) &&
             (identical(other.roomName, roomName) ||
                 other.roomName == roomName) &&
             (identical(other.description, description) ||
@@ -294,7 +351,16 @@ class _$RoomImpl with DiagnosticableTreeMixin implements _Room {
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
             const DeepCollectionEquality().equals(other._members, _members) &&
-            (identical(other.status, status) || other.status == status));
+            const DeepCollectionEquality().equals(other._progress, _progress) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.badHabit, badHabit) ||
+                other.badHabit == badHabit) &&
+            (identical(other.creationDate, creationDate) ||
+                other.creationDate == creationDate) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
+            (identical(other.targetDate, targetDate) ||
+                other.targetDate == targetDate));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -302,14 +368,17 @@ class _$RoomImpl with DiagnosticableTreeMixin implements _Room {
   int get hashCode => Object.hash(
       runtimeType,
       roomId,
-      goalId,
       creatorId,
-      creationDate,
       roomName,
       description,
       duration,
       const DeepCollectionEquality().hash(_members),
-      status);
+      const DeepCollectionEquality().hash(_progress),
+      status,
+      badHabit,
+      creationDate,
+      startDate,
+      targetDate);
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
@@ -330,25 +399,24 @@ class _$RoomImpl with DiagnosticableTreeMixin implements _Room {
 abstract class _Room implements Room {
   const factory _Room(
       {final String roomId,
-      final String goalId,
       final String creatorId,
-      final DateTime? creationDate,
       final String roomName,
       final String description,
       final String duration,
       final List<String> members,
-      final String status}) = _$RoomImpl;
+      final Map<String, List<bool>>? progress,
+      final String status,
+      final String badHabit,
+      final DateTime? creationDate,
+      final DateTime? startDate,
+      final DateTime? targetDate}) = _$RoomImpl;
 
   factory _Room.fromJson(Map<String, dynamic> json) = _$RoomImpl.fromJson;
 
   @override
   String get roomId;
   @override
-  String get goalId;
-  @override
   String get creatorId;
-  @override
-  DateTime? get creationDate;
   @override
   String get roomName;
   @override
@@ -358,7 +426,17 @@ abstract class _Room implements Room {
   @override
   List<String> get members;
   @override
+  Map<String, List<bool>>? get progress;
+  @override
   String get status;
+  @override
+  String get badHabit;
+  @override
+  DateTime? get creationDate;
+  @override
+  DateTime? get startDate;
+  @override
+  DateTime? get targetDate;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.

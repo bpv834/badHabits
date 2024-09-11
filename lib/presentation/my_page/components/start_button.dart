@@ -1,10 +1,11 @@
-import 'package:bhgh/core/router/router.dart';
 import 'package:bhgh/presentation/my_page/my_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class StartButton extends StatelessWidget {
-  const StartButton({super.key});
+  final String roomId;
+
+  const StartButton({super.key, required this.roomId});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class StartButton extends StatelessWidget {
                           onPressed: () {
                             // "네" 버튼 클릭 시 동작
                             Navigator.of(context).pop(); // 다이얼로그 닫기
+                            viewModel.convertingToRunning(roomId);
                             print('악습관 교정 시작');
                           },
                           child: const Text('네'),
@@ -57,4 +59,5 @@ class StartButton extends StatelessWidget {
       icon: Icon(Icons.play_arrow),
     );
   }
+
 }
