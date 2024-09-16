@@ -90,33 +90,37 @@ class MyViewModel with ChangeNotifier {
           /*List<String> members = data['members'];*/ //에러 발생 data['members']가 List<dynamic> 타입이라 타입이 달라 에러
           List<String> members = List<String>.from(data['members']);
 
-          // members 리스트를 활용해 progress Map을 만듭니다. 각 멤버에게 빈 List<bool>을 할당.
-          Map<String, List<bool>> progress = {};
-
-          for (String member in members) {
-            print(member);
-            progress[member] = []; // 각 멤버에 대해 빈 List<bool>을 할당
-          }
-
           DateTime currentDate = DateTime.now();
           DateTime targetDate;
+          int? totalDays; // 기간에 따른 총 일 수
 
           switch (duration) {
             case '1주':
               targetDate = currentDate.add(Duration(days: 7)); // 1주 = 7일
+              totalDays = 7;
               break;
             case '2주':
               targetDate = currentDate.add(Duration(days: 14)); // 2주 = 14일
+              totalDays = 14;
               break;
             case '3주':
               targetDate = currentDate.add(Duration(days: 21)); // 3주 = 21일
+              totalDays = 21;
               break;
             case '4주':
               targetDate = currentDate.add(Duration(days: 28)); // 4주 = 28일
+              totalDays = 28;
               break;
             default:
               targetDate = currentDate; // 기본값: 현재 날짜를 그대로 사용
               print('알 수 없는 기간: $duration');
+          }
+
+          // members 리스트를 활용해 progress Map을 만듭니다. 각 멤버에게 빈 List<bool>을 할당.
+          Map<String, List<bool>> progress = {};
+
+          for (String member in members) {
+            progress[member] = List.generate(totalDays!, (index) => false); // 기간에 맞게 false 리스트 생성
           }
 
           // Firestore에 update

@@ -1,3 +1,5 @@
+import 'package:bhgh/presentation/room_board_page/room_board_screen.dart';
+import 'package:bhgh/presentation/room_board_page/room_board_view_model.dart';
 import 'package:bhgh/presentation/room_page/room_screen.dart';
 import 'package:bhgh/presentation/room_page/room_view_model.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../di/di_setup.dart';
+import '../../domain/model/room.dart';
 import '../../presentation/home_page/home_screen.dart';
 import '../../presentation/home_page/home_view_model.dart';
 import '../../presentation/login_page/login_screen.dart';
@@ -102,6 +105,18 @@ final GoRouter router = GoRouter(
         return ChangeNotifierProvider(
           create: (_) => getIt.get<SignUpViewModel>(),
           child: SignUpScreen(),
+        );
+      },
+    ),
+    //Room Board
+    GoRoute(
+      path: '/roomBoardPage', // roomId 파라미터를 제거한 경로
+      builder: (BuildContext context, GoRouterState state) {
+        // 전달된 Room 객체를 받음
+        Room room = state.extra as Room;
+        return ChangeNotifierProvider(
+          create: (_) => getIt.get<RoomBoardViewModel>(),
+          child: RoomBoardScreen(room: room), // Room 객체를 전달
         );
       },
     ),

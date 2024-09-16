@@ -28,6 +28,8 @@ import 'package:bhgh/domain/usecase/get_user_tiles_asc_use_case.dart' as _i336;
 import 'package:bhgh/presentation/home_page/home_view_model.dart' as _i209;
 import 'package:bhgh/presentation/login_page/login_view_model.dart' as _i566;
 import 'package:bhgh/presentation/my_page/my_view_model.dart' as _i198;
+import 'package:bhgh/presentation/room_board_page/room_board_view_model.dart'
+    as _i596;
 import 'package:bhgh/presentation/room_page/room_view_model.dart' as _i136;
 import 'package:bhgh/presentation/sign_up_page/sign_up_view_model.dart'
     as _i157;
@@ -47,6 +49,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i566.LoginViewModel>(() => _i566.LoginViewModel());
     gh.factory<_i157.SignUpViewModel>(() => _i157.SignUpViewModel());
+    gh.factory<_i596.RoomBoardViewModel>(() => _i596.RoomBoardViewModel());
     gh.singleton<_i982.RoomRepository>(() => _i766.RoomRepositoryImpl());
     gh.singleton<_i212.GetMyCreationRoomsUseCase>(() =>
         _i212.GetMyCreationRoomsUseCase(

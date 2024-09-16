@@ -9,8 +9,9 @@ import 'package:bhgh/presentation/my_page/components/profile_card.dart';
 import 'package:bhgh/presentation/my_page/my_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:bhgh/presentation/my_page/components/room_card.dart';
 
-import 'components/room_card.dart';
+
 
 class MyScreen extends StatelessWidget {
   const MyScreen({super.key});
@@ -71,17 +72,7 @@ class MyScreen extends StatelessWidget {
                                   GetMyCompleteRoomsUseCase(
                                       roomRepository: RoomRepositoryImpl()),
                                   GetUserAscUseCase(UserRepositoryImpl())),
-                              child: RoomCard(
-                                roomName: creationRoom.roomName,
-                                description: creationRoom.description,
-                                creationDate:
-                                    creationRoom.creationDate.toString(),
-                                status: creationRoom.status,
-                                members: creationRoom.members.length,
-                                roomStatus: 'my creation',
-                                roomId: creationRoom.roomId,
-                                leftDay: null,
-                              ));
+                              child: RoomCard(roomStatus: 'my creation', leftDay: null, room: creationRoom));
                         },
                       ),
                     ),
@@ -104,14 +95,9 @@ class MyScreen extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           final pendingRoom = state.myPendingRooms[index];
                           return RoomCard(
-                            roomName: pendingRoom.roomName,
-                            description: pendingRoom.description,
-                            creationDate: pendingRoom.creationDate.toString(),
-                            status: pendingRoom.status,
-                            members: pendingRoom.members.length,
                             roomStatus: 'my pending',
-                            roomId: pendingRoom.roomId,
                             leftDay: null,
+                            room: pendingRoom,
                           );
                         },
                       ),
@@ -136,14 +122,10 @@ class MyScreen extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           final runningRoom = state.myRunningRooms[index];
                           return RoomCard(
-                            roomName: runningRoom.roomName,
-                            description: runningRoom.description,
-                            creationDate: runningRoom.creationDate.toString(),
-                            status: runningRoom.status,
-                            members: runningRoom.members.length,
                             roomStatus: 'my running',
-                            roomId: runningRoom.roomId,
-                            leftDay: viewModel.culLeftDay(runningRoom.startDate!, runningRoom.targetDate!),
+                            leftDay: viewModel.culLeftDay(
+                                DateTime.now(), runningRoom.targetDate!),
+                            room: runningRoom,
                           );
                         },
                       ),
@@ -168,14 +150,9 @@ class MyScreen extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           final completeRoom = state.myCreationRooms[index];
                           return RoomCard(
-                            roomName: completeRoom.roomName,
-                            description: completeRoom.description,
-                            creationDate: completeRoom.creationDate.toString(),
-                            status: completeRoom.status,
-                            members: completeRoom.members.length,
                             roomStatus: 'my completed',
-                            roomId: completeRoom.roomId,
                             leftDay: null,
+                            room: completeRoom,
                           );
                         },
                       ),
