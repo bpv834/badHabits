@@ -10,9 +10,15 @@ class RoomRepositoryImpl implements RoomRepository {
   Future<List<Room>> getRooms() async{
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     QuerySnapshot<Map<String, dynamic>> _snapshot = await _firestore.collection("rooms").get();
+
+
+
+
     List<Room> result =
     _snapshot.docs.map((e) {
       Map<String, dynamic> data = e.data();
+
+      print('data: $data');
       // creationDate를 문자열로 변환하여 data에 다시 저장
       if (data['creationDate'] is Timestamp) {
         data['creationDate'] = (data['creationDate'] as Timestamp).toDate().toIso8601String();
@@ -23,10 +29,8 @@ class RoomRepositoryImpl implements RoomRepository {
       if (data['targetDate'] is Timestamp) {
         data['targetDate'] = (data['targetDate'] as Timestamp).toDate().toIso8601String();
       }
-      print('After modification: $data');
       return Room.fromJson(data);
     }).toList();
-    print('PendingRoomRepositoryImpl에서 Result :$result');
     return result;
   }
 }

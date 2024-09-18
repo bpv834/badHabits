@@ -11,7 +11,6 @@ class GetUserTilesAscUseCase {
 
   Future<List<UserTiles>> execute() async {
     final tiles = await _tilesRepository.getTiles();
-    print('위치 : GetUserTilesAscUseCase/tiles = $tiles');
     return tiles;
   }
 

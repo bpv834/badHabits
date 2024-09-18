@@ -11,7 +11,6 @@ class GetUserAscUseCase {
 
   Future<List<UserModel>> execute() async {
     final users = await _userRepository.getUsers();
-    print('users = $users');
     return users;
   }
 }

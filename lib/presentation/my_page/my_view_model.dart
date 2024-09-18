@@ -40,9 +40,8 @@ class MyViewModel with ChangeNotifier {
     Duration diff = fi.difference(st);
 
     // 남은 일수 반환
-    return diff.inDays+1;
+    return diff.inDays + 1;
   }
-
 
   Future<void> getMyRooms() async {
     //loading중으로 변경후
@@ -77,7 +76,7 @@ class MyViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> convertingToRunning(String roomId) async{
+  Future<void> convertingToRunning(String roomId) async {
     //rooms컬렉션에서 roomId로 접근
     final roomRef = FirebaseFirestore.instance.collection('rooms').doc(roomId);
 
@@ -120,15 +119,16 @@ class MyViewModel with ChangeNotifier {
           Map<String, List<bool>> progress = {};
 
           for (String member in members) {
-            progress[member] = List.generate(totalDays!, (index) => false); // 기간에 맞게 false 리스트 생성
+            progress[member] = List.generate(
+                totalDays!, (index) => false); // 기간에 맞게 false 리스트 생성
           }
 
           // Firestore에 update
           roomRef.update({
             'members': members,
             'startDate': DateTime.now(),
-            'progress': progress,  // 생성된 progress Map
-            'targetDate' : targetDate
+            'progress': progress, // 생성된 progress Map
+            'targetDate': targetDate
           }).then((_) {
             print("room 업데이트 완료");
           }).catchError((error) {
@@ -143,6 +143,16 @@ class MyViewModel with ChangeNotifier {
     }).catchError((error) {
       print("문서를 가져오는 중 오류 발생: $error");
     });
-    await roomRef.update({'status':'running'});
+    await roomRef.update({'status': 'running'});
+  }
+
+  Future<void> convertingToComplete(String roomId) async {
+    //rooms컬렉션에서 roomId로 접근
+    final roomRef = FirebaseFirestore.instance.collection('rooms').doc(roomId);
+
+    // Firestore에 update
+    roomRef.update({
+      'status': 'complete',
+    });
   }
 }

@@ -148,7 +148,7 @@ class MyScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: state.myCompleteRooms.length,
                         itemBuilder: (BuildContext context, int index) {
-                          final completeRoom = state.myCreationRooms[index];
+                          final completeRoom = state.myCompleteRooms [index];
                           return RoomCard(
                             roomStatus: 'my completed',
                             leftDay: null,

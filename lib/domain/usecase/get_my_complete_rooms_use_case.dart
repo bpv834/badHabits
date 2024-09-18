@@ -14,8 +14,6 @@ class GetMyCompleteRoomsUseCase {
   Future<List<Room>> execute() async {
     List<Room> list =await _roomRepository.getRooms();
     List<Room> completeRooms = list.where((room)=>room.members.contains( FirebaseAuth.instance.currentUser!.uid)).where((room)=>room.status == "complete").toList();
-    print('completeRooms: $completeRooms');
-
     return completeRooms;
   }
 }

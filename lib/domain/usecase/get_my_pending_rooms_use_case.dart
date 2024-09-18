@@ -14,7 +14,6 @@ class GetMyPendingRoomsUseCase {
   Future<List<Room>> execute() async {
     List<Room> list =await _roomRepository.getRooms();
     List<Room> pendingRooms = list.where((room)=>room.members.contains( FirebaseAuth.instance.currentUser!.uid)).where((room)=>room.status == "pending").toList();
-    print('pendingRooms: $pendingRooms');
 
     return pendingRooms;
   }

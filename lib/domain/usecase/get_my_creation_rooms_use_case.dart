@@ -14,7 +14,6 @@ class GetMyCreationRoomsUseCase {
   Future<List<Room>> execute() async {
     List<Room> list =await _roomRepository.getRooms();
     List<Room> creationList = list.where((room)=>room.creatorId == FirebaseAuth.instance.currentUser!.uid).toList();
-    print('creationList: $creationList');
 
    return creationList;
   }

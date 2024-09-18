@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../../domain/model/room.dart';
 
-class RoomCard extends StatelessWidget {
+class RoomCard extends StatefulWidget {
   final Room room;
   final String roomStatus;
   final int? leftDay;
@@ -26,11 +26,25 @@ class RoomCard extends StatelessWidget {
   });
 
   @override
+  State<RoomCard> createState() => _RoomCardState();
+}
+
+class _RoomCardState extends State<RoomCard> {
+  @override
+  void initState() {
+    if(widget.leftDay == -2){
+      //2일이 지나면 저절로 convertingToComplete 메서드를 통해 방 상태를 running-> complete 로 변경
+      final viewModel = context.read<MyViewModel>();
+      viewModel.convertingToComplete(widget.room.roomId);
+    }
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        router.push('/roomBoardPage',extra: room); // extra 이용해서 인스턴스 넘겨줌
-        print('@@@@@@progress${room.progress}');
+        router.push('/roomBoardPage',extra: widget.room); // extra 이용해서 인스턴스 넘겨줌
       },
       child: SingleChildScrollView(
         child: Card(
@@ -47,20 +61,20 @@ class RoomCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      room.roomName,
+                      widget.room.roomName,
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
-                    Text(room.description, style: const TextStyle(fontSize: 16)),
+                    Text(widget.room.description, style: const TextStyle(fontSize: 16)),
                     const SizedBox(height: 8),
-                    Text('status: ${room.status}',
+                    Text('status: ${widget.room.status}',
                         style: const TextStyle(fontSize: 16)),
                     const SizedBox(height: 8),
-                    Text('members: ${room.members.length}',
+                    Text('members: ${widget.room.members.length}',
                         style: const TextStyle(fontSize: 16)),
-                    room.status == 'running' && leftDay != null
-                        ? Text('남은일수 : $leftDay',
+                    widget.room.status == 'running' && widget.leftDay != null
+                        ? Text('남은일수 : ${widget.leftDay}',
                             style: const TextStyle(fontSize: 16))
                         : SizedBox()
                   ],
@@ -69,7 +83,7 @@ class RoomCard extends StatelessWidget {
                 Positioned(
                   bottom: 0,
                   right: 0,
-                  child: roomStatus == 'my creation'
+                  child: widget.roomStatus == 'my creation'
                       ? ChangeNotifierProvider(
                           create: (_) => MyViewModel(
                               GetMyCreationRoomsUseCase(
@@ -81,9 +95,9 @@ class RoomCard extends StatelessWidget {
                               GetMyCompleteRoomsUseCase(
                                   roomRepository: RoomRepositoryImpl()),
                               GetUserAscUseCase(UserRepositoryImpl())),
-                          child: room.status == 'pending'
+                          child: widget.room.status == 'pending'
                               ? StartButton(
-                                  roomId: room.roomId,
+                                  roomId: widget.room.roomId,
                                 )
                               : SizedBox())
                       : const SizedBox(), // 'running'일 때는 빈 박스를 표시

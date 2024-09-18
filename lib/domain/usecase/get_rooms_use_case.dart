@@ -11,7 +11,6 @@ class GetRoomsUseCase {
 
   Future<List<Room>> execute() async { // 반환 타입을 List<Room>으로 변경
     final rooms = await _roomRepository.getRooms();
-    print('rooms = $rooms');
     return rooms;
   }
 }

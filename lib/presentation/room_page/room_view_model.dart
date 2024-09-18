@@ -13,9 +13,8 @@ class RoomViewModel with ChangeNotifier {
   //방 목록 불러오기 생성자를 통해
   RoomViewModel(this._roomUseCase) {
     if (_roomUseCase == null) {
-      print('_pendingRoomUseCase = null');
+      print('현재 위치 : room_view_model/_pendingRoomUseCase = null');
     } else {
-      print('RoomViewModel');
       getPendingRooms();
     }
   }
@@ -36,22 +35,22 @@ class RoomViewModel with ChangeNotifier {
       final snapshot = await transaction.get(roomsDoc);
 
       if (!snapshot.exists) {
-        print('방이 존재하지 않습니다.');
+        print('현재 위치 : room_view_model/방이 존재하지 않습니다.');
         return;
       }
 
       List<dynamic> members = snapshot['members'] ?? [];
 
       if (members.contains(FirebaseAuth.instance.currentUser!.uid)) {
-        print('이미 있어요');
+        print('현재 위치 : room_view_model/이미 있어요');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('이미 참여중입니다!ㅠ')),
+          SnackBar(content: Text('현재 위치 : room_view_model/이미 참여중입니다!ㅠ')),
         );
 
       } else {
         members.add(FirebaseAuth.instance.currentUser!.uid);
         transaction.update(roomsDoc, {'members': members});
-        print('멤버에 추가되었습니다.');
+        print('현재 위치 : room_view_model/멤버에 추가되었습니다.');
 
         // 사용자의 joinedRoom 필드 업데이트
         final userRef =
@@ -61,7 +60,7 @@ class RoomViewModel with ChangeNotifier {
         });
       }
     }).catchError((error) {
-      print('방 참가 중 오류 발생: $error');
+      print('현재 위치 : room_view_model/방 참가 중 오류 발생: $error');
     });
   }
 
@@ -73,7 +72,6 @@ class RoomViewModel with ChangeNotifier {
     List<Room> result = await _roomUseCase!.execute();
     _state = _state.copyWith(rooms: result, isLoading: false);
     notifyListeners();
-    print('state.Rooms: ${_state.rooms}');
   }
 
   void showCreateGroupDialog(BuildContext context) {
@@ -123,9 +121,9 @@ class RoomViewModel with ChangeNotifier {
       });
 
       print(
-          'DocumentSnapshot added and Room ID: $roomId');
+          '현재 위치 : room_view_model/DocumentSnapshot added and Room ID: $roomId');
     } catch (e) {
-      print('에러 발생: $e');
+      print('현재 위치 : room_view_model/에러 발생: $e');
     }
   }
 }
