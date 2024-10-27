@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DataTableContainer extends StatelessWidget {
-  DataTableContainer({super.key, required this.room});
+  const DataTableContainer({super.key, required this.room});
 
   final Room room;
 
@@ -13,9 +13,8 @@ class DataTableContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.watch<RoomBoardViewModel>();
     return Expanded(
-      flex: 4, // 진척도 부분에 많은 공간을 할당
+      flex: 1, // 진척도 부분에 많은 공간을 할당
       child: Container(
-        height: 350, // 높이 400px로 설정
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: SingleChildScrollView(
@@ -31,28 +30,34 @@ class DataTableContainer extends StatelessWidget {
               )
                   .map((weekDates) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 40.0), // 좌우 10, 위아래 40,
                   child: Column(children: [
-                    Divider(),
                     DataTable(
-                      columnSpacing: 12.0,
+                      dataRowMaxHeight: 50,
+                      columnSpacing: 10.0,
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.green),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       columns: [
                         DataColumn(
-                          label: Text(
-                            '멤버',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          label: Container(
+                            padding: EdgeInsets.symmetric(vertical: 1.0), // 위 아래 패딩 조절
+                            child: Text(
+                              '멤버',
+                              style: TextStyle(fontWeight: FontWeight.bold, ),
+                            ),
                           ),
                         ),
                         ...List.generate(weekDates.length, (index) {
                           final date = weekDates[index];
                           return DataColumn(
-                            label: Text(
-                              viewModel.formatDate(date),
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                            label: Container(
+                              padding: EdgeInsets.symmetric(vertical: 1.0),
+                              child: Text(
+                                viewModel.formatDate(date),
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ),
                           );
                         }),

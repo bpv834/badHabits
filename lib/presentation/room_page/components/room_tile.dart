@@ -12,7 +12,7 @@ class RoomTile extends StatelessWidget {
   final String roomId;
 
   const RoomTile({
-    Key? key,
+    super.key,
     required this.creationDate,
     required this.creatorId,
     required this.description,
@@ -20,7 +20,7 @@ class RoomTile extends StatelessWidget {
     required this.members,
     required this.roomName,
     required this.roomId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

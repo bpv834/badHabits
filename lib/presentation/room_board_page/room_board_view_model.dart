@@ -15,11 +15,11 @@ class RoomBoardViewModel with ChangeNotifier {
 
   RoomBoardState _state = const RoomBoardState();
 
-  RoomBoardViewModel({required GetMyRoomBoardCommentsDateDescUseCase getMyRoomBoardCommentsDateAscUseCase})
+  RoomBoardViewModel(
+      {required GetMyRoomBoardCommentsDateDescUseCase getMyRoomBoardCommentsDateAscUseCase})
       : _getMyRoomBoardCommentsDateAscUseCase = getMyRoomBoardCommentsDateAscUseCase {}
 
   RoomBoardState get state => _state;
-
 
 
   // 날짜 기준 Column 생성 (7일 고정)
@@ -35,10 +35,10 @@ class RoomBoardViewModel with ChangeNotifier {
     weeksCount = duration == '1주'
         ? 1
         : duration == '2주'
-            ? 2
-            : duration == '3주'
-                ? 3
-                : 4; // 기본값
+        ? 2
+        : duration == '3주'
+        ? 3
+        : 4; // 기본값
 
     return weeksCount;
   }
@@ -72,8 +72,8 @@ class RoomBoardViewModel with ChangeNotifier {
     return userId;
   }
 
-  Future<void> postProgressToFireBase(
-      Map<String, List<bool>> progress, Room room) async {
+  Future<void> postProgressToFireBase(Map<String, List<bool>> progress,
+      Room room) async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
 
     final roomRef = db.collection('rooms').doc(room.roomId);
@@ -81,8 +81,8 @@ class RoomBoardViewModel with ChangeNotifier {
   }
 
   // 진척도 업데이트 메서드 (progress update function)
-  Future<void> updateProgress(
-      Room room, String member, int index, DateTime date) async {
+  Future<void> updateProgress(Room room, String member, int index,
+      DateTime date) async {
     if (member == getUserId()) {
       DateTime now = DateTime.now().toLocal();
 
@@ -100,7 +100,7 @@ class RoomBoardViewModel with ChangeNotifier {
       notifyListeners();
 
       final updatedProgress =
-          Map<String, List<bool>>.from(_state.mutableProgress);
+      Map<String, List<bool>>.from(_state.mutableProgress);
 
       if (updatedProgress[member] == null) {
         updatedProgress[member] = List.filled(28, false);
@@ -121,8 +121,8 @@ class RoomBoardViewModel with ChangeNotifier {
   }
 
 // 진척도 행을 생성
-  List<DataRow> generateDataRows(
-      List<DateTime> weekDates, Room room, List<DateTime> dates) {
+  List<DataRow> generateDataRows(List<DateTime> weekDates, Room room,
+      List<DateTime> dates) {
     List<String> members = room.members;
     _state = _state.copyWith(
         mutableProgress: Map<String, List<bool>>.from(room.progress ?? {}));
@@ -215,10 +215,38 @@ class RoomBoardViewModel with ChangeNotifier {
 
       // 댓글을 Firestore에 저장
       await newCommentDoc.set(commentData);
+      //새로 쓴 댓글을 불러와 화면을 다시 그린다.
+      getCommentsByRoom(roomId);
     } catch (e) {
       print("Error adding comment: $e");
     }
   }
+
+  // 댓글 삭제
+  Future<void> deleteComment(String commentId, String roomId) async {
+    try {
+      _state = _state.copyWith(isReplyLoading: true);
+      notifyListeners();
+
+      // Firestore 인스턴스 초기화
+      final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+      // 댓글 ID에 해당하는 댓글을 Firestore에서 삭제
+      await _firestore.collection('comments').doc(commentId).delete();
+
+      //댓글 삭제 후 상태변경
+      getCommentsByRoom(roomId);
+      // 성공적으로 삭제된 경우 추가 로직 (예: UI 업데이트 등)
+      print('Comment deleted successfully');
+    } catch (e) {
+      // 에러 발생 시 처리 로직
+      print('Failed to delete comment: $e');
+    }
+  }
+  //댓글 수정
+
+  //답글 달기
+
 
   Future<void> addReply(String commentId, String replyContent) async {
     try {
@@ -238,7 +266,7 @@ class RoomBoardViewModel with ChangeNotifier {
 
       // 새로운 답글 문서 생성
       final newReplyDoc =
-          commentDoc.collection('replies').doc(); // 자동 생성된 답글 문서 ID
+      commentDoc.collection('replies').doc(); // 자동 생성된 답글 문서 ID
 
       // 답글 데이터를 Firestore에 저장
       await newReplyDoc.set({
@@ -254,43 +282,15 @@ class RoomBoardViewModel with ChangeNotifier {
     }
   }
 
-  Future<List<Comment>> getCommentsByRoomId(String roomId) async{
-    return await _getMyRoomBoardCommentsDateAscUseCase.execute(roomId);
+  Future<void> getCommentsByRoom(String roomId) async {
+    _state = _state.copyWith(isReplyLoading: true);
+    notifyListeners();
+
+    List<Comment> commentsList = await _getMyRoomBoardCommentsDateAscUseCase
+        .execute(roomId);
+    _state = _state.copyWith(comments: commentsList, isReplyLoading: false);
+    notifyListeners();
   }
 
-  void _showMenu(BuildContext context) {
-    showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(
-        MediaQuery.of(context).size.width - 56, // Adjust position if needed
-        0,
-        0,
-        MediaQuery.of(context).size.height,
-      ),
-      items: [
-        PopupMenuItem(
-          child: Text('댓글 삭제'),
-          value: 'delete',
-        ),
-        PopupMenuItem(
-          child: Text('댓글 수정'),
-          value: 'edit',
-        ),
-        PopupMenuItem(
-          child: Text('답글 달기'),
-          value: 'reply',
-        ),
-      ],
-      elevation: 8.0,
-    ).then((value) {
-      if (value == 'delete') {
-        // 댓글 삭제 로직
-      } else if (value == 'edit') {
-        // 댓글 수정 로직
-      } else if (value == 'reply') {
-        // 답글 달기 로직
-      }
-    });
-  }
 
 }

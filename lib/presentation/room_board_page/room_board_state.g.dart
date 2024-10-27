@@ -9,6 +9,7 @@ part of 'room_board_state.dart';
 _$RoomBoardStateImpl _$$RoomBoardStateImplFromJson(Map<String, dynamic> json) =>
     _$RoomBoardStateImpl(
       isLoading: json['isLoading'] as bool? ?? false,
+      isReplyLoading: json['isReplyLoading'] as bool? ?? false,
       mutableProgress: (json['mutableProgress'] as Map<String, dynamic>?)?.map(
             (k, e) => MapEntry(
                 k, (e as List<dynamic>).map((e) => e as bool).toList()),
@@ -28,6 +29,7 @@ Map<String, dynamic> _$$RoomBoardStateImplToJson(
         _$RoomBoardStateImpl instance) =>
     <String, dynamic>{
       'isLoading': instance.isLoading,
+      'isReplyLoading': instance.isReplyLoading,
       'mutableProgress': instance.mutableProgress,
       'comments': instance.comments,
       'replies': instance.replies,

@@ -25,7 +25,7 @@ import 'package:bhgh/domain/usecase/get_my_pending_rooms_use_case.dart'
 import 'package:bhgh/domain/usecase/get_my_running_rooms_use_case.dart'
     as _i740;
 import 'package:bhgh/domain/usecase/get_room_board_comments_date_desc_use_case.dart'
-    as _i379;
+    as _i885;
 import 'package:bhgh/domain/usecase/get_rooms_use_case.dart' as _i300;
 import 'package:bhgh/domain/usecase/get_user_asc_use_case.dart' as _i467;
 import 'package:bhgh/domain/usecase/get_user_tiles_asc_use_case.dart' as _i336;
@@ -75,12 +75,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i136.RoomViewModel(gh<_i300.GetRoomsUseCase>()));
     gh.singleton<_i336.GetUserTilesAscUseCase>(
         () => _i336.GetUserTilesAscUseCase(gh<_i1072.TilesRepository>()));
-    gh.singleton<_i379.GetMyRoomBoardCommentsDateDescUseCase>(() =>
-        _i379.GetMyRoomBoardCommentsDateDescUseCase(
+    gh.singleton<_i885.GetMyRoomBoardCommentsDateDescUseCase>(() =>
+        _i885.GetMyRoomBoardCommentsDateDescUseCase(
             commentRepository: gh<_i793.CommentRepository>()));
     gh.factory<_i596.RoomBoardViewModel>(() => _i596.RoomBoardViewModel(
         getMyRoomBoardCommentsDateAscUseCase:
-            gh<_i379.GetMyRoomBoardCommentsDateDescUseCase>()));
+            gh<_i885.GetMyRoomBoardCommentsDateDescUseCase>()));
     gh.singleton<_i467.GetUserAscUseCase>(
         () => _i467.GetUserAscUseCase(gh<_i241.UserRepository>()));
     gh.factory<_i198.MyViewModel>(() => _i198.MyViewModel(
