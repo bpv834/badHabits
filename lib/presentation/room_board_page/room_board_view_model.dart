@@ -258,39 +258,4 @@ class RoomBoardViewModel with ChangeNotifier {
     return await _getMyRoomBoardCommentsDateAscUseCase.execute(roomId);
   }
 
-  void _showMenu(BuildContext context) {
-    showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(
-        MediaQuery.of(context).size.width - 56, // Adjust position if needed
-        0,
-        0,
-        MediaQuery.of(context).size.height,
-      ),
-      items: [
-        PopupMenuItem(
-          child: Text('댓글 삭제'),
-          value: 'delete',
-        ),
-        PopupMenuItem(
-          child: Text('댓글 수정'),
-          value: 'edit',
-        ),
-        PopupMenuItem(
-          child: Text('답글 달기'),
-          value: 'reply',
-        ),
-      ],
-      elevation: 8.0,
-    ).then((value) {
-      if (value == 'delete') {
-        // 댓글 삭제 로직
-      } else if (value == 'edit') {
-        // 댓글 수정 로직
-      } else if (value == 'reply') {
-        // 답글 달기 로직
-      }
-    });
-  }
-
 }
