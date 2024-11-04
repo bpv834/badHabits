@@ -1,14 +1,13 @@
 import 'package:bhgh/data/repository/comment_repository_impl.dart';
 import 'package:bhgh/domain/usecase/get_room_board_comments_date_desc_use_case.dart';
-import 'package:bhgh/presentation/room_board_page/components/comments_future_builder.dart';
 import 'package:bhgh/presentation/room_board_page/components/data_table_container.dart';
 import 'package:bhgh/presentation/room_board_page/components/room_inform_column.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../domain/model/comment.dart';
 import '../../domain/model/room.dart';
 import '../../presentation/room_board_page/room_board_view_model.dart';
+import 'components/comment_tile.dart';
 
 class RoomBoardScreen extends StatefulWidget {
   final Room room;
@@ -20,6 +19,17 @@ class RoomBoardScreen extends StatefulWidget {
 }
 
 class _RoomBoardScreenState extends State<RoomBoardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // ViewModel에서 필요한 초기화를 진행
+    //  UI 프레임이 빌드된 후에 특정 작업을 수행하기 위해 사용되는 메서드입니다. 이 메서드는 주로 UI가 화면에 표시된 후 실행되어야 하는 로직을 추가할 때 유용합니다.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final viewModel = context.read<RoomBoardViewModel>();
+      viewModel.getCommentsByRoom(widget.room.roomId);
+    });
+  }
+
   final TextEditingController _commentTextEditingController =
       TextEditingController();
 
@@ -55,15 +65,17 @@ class _RoomBoardScreenState extends State<RoomBoardScreen> {
                     ),
                     child: DataTableContainer(room: room),
                   ),
-                  // 댓글 리스트
-                  ChangeNotifierProvider(
-                    create: (_) => RoomBoardViewModel(
-                      getMyRoomBoardCommentsDateAscUseCase:
-                          GetMyRoomBoardCommentsDateDescUseCase(
-                        commentRepository: CommentRepositoryImpl(),
-                      ),
-                    ),
-                    child: CommentsFutureBuilder(room: room),
+                  Expanded(
+                    child: state.isReplyLoading
+                        ? CircularProgressIndicator()
+                        : ListView.builder(
+                            padding: EdgeInsets.all(8.0),
+                            itemCount: state.comments.length,
+                            itemBuilder: (context, index) {
+                              final comment = state.comments[index];
+                              return CommentTile(comment: comment, room: room);
+                            },
+                          ),
                   ),
                   // 댓글 입력란을 위한 공간
                   Container(
@@ -98,5 +110,3 @@ class _RoomBoardScreenState extends State<RoomBoardScreen> {
     );
   }
 }
-
-
