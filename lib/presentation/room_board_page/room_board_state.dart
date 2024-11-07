@@ -12,6 +12,9 @@ class RoomBoardState with _$RoomBoardState {
   const factory RoomBoardState({
     @Default(false) bool isLoading,
     @Default(false) bool isReplyLoading,
+    @Default(true) bool commentState,
+    @Default(false) bool replyState,
+    @Default(false) bool commentFixState,
     @Default({}) Map<String, List<bool>> mutableProgress,
     @Default([]) List<Comment> comments,
     @Default([]) List<Reply> replies,

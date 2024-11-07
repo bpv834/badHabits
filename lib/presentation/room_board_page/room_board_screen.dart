@@ -1,5 +1,6 @@
 import 'package:bhgh/data/repository/comment_repository_impl.dart';
 import 'package:bhgh/domain/usecase/get_room_board_comments_date_desc_use_case.dart';
+import 'package:bhgh/presentation/room_board_page/components/add_comment_container.dart';
 import 'package:bhgh/presentation/room_board_page/components/data_table_container.dart';
 import 'package:bhgh/presentation/room_board_page/components/room_inform_column.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,7 @@ class _RoomBoardScreenState extends State<RoomBoardScreen> {
                     ),
                     child: DataTableContainer(room: room),
                   ),
+                  // 댓글목록 view
                   Expanded(
                     child: state.isReplyLoading
                         ? CircularProgressIndicator()
@@ -78,32 +80,7 @@ class _RoomBoardScreenState extends State<RoomBoardScreen> {
                           ),
                   ),
                   // 댓글 입력란을 위한 공간
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    color: Colors.grey[200],
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _commentTextEditingController,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: '댓글을 입력하세요...',
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.send),
-                          onPressed: () {
-                            viewModel.addComment(widget.room.roomId,
-                                _commentTextEditingController.text);
-                            _commentTextEditingController.clear();
-                            FocusScope.of(context).unfocus();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
+                AddCommentContainer(room: room)
                 ],
               ),
             ),

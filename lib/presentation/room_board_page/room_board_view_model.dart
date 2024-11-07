@@ -72,6 +72,7 @@ class RoomBoardViewModel with ChangeNotifier {
     return userId;
   }
 
+  // 진척도의 상태를 파이어베이스에 post하는 메서드
   Future<void> postProgressToFireBase(Map<String, List<bool>> progress,
       Room room) async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -116,11 +117,12 @@ class RoomBoardViewModel with ChangeNotifier {
 
       // UI를 새로고침하도록 알립니다.
       notifyListeners();
+      // 파이어베이스에 진척도 post
       await postProgressToFireBase(updatedProgress, room);
     }
   }
 
-// 진척도 행을 생성
+// 진척도의 행을 생성
   List<DataRow> generateDataRows(List<DateTime> weekDates, Room room,
       List<DateTime> dates) {
     List<String> members = room.members;
@@ -190,6 +192,7 @@ class RoomBoardViewModel with ChangeNotifier {
     return rows;
   }
 
+  // 댓글 달기 메서드
   Future<void> addComment(String roomId, String commentContent) async {
     try {
       String userId = getUserId();
@@ -245,9 +248,8 @@ class RoomBoardViewModel with ChangeNotifier {
   }
   //댓글 수정
 
+
   //답글 달기
-
-
   Future<void> addReply(String commentId, String replyContent) async {
     try {
       String userId = getUserId();
@@ -269,6 +271,13 @@ class RoomBoardViewModel with ChangeNotifier {
       commentDoc.collection('replies').doc(); // 자동 생성된 답글 문서 ID
 
       // 답글 데이터를 Firestore에 저장
+      // ...replyData: replyData 맵에 있는 기존 데이터(userId, content, timestamp 필드들)를 새 맵에 추가합니다.
+      // ...(스프레드 연산자)는 replyData의 모든 키-값 쌍을 펼쳐서 새 맵에 넣어줍니다.
+
+  /*'replyId': '',
+    'userId': userId,
+    'content': replyContent,
+    'timestamp': DateTime.now() 와 동일 함*/
       await newReplyDoc.set({
         ...replyData,
         'replyId': newReplyDoc.id, // 자동 생성된 답글 ID 설정
@@ -282,6 +291,7 @@ class RoomBoardViewModel with ChangeNotifier {
     }
   }
 
+  //roomId를 이용해 댓글을 읽어오는 메서드
   Future<void> getCommentsByRoom(String roomId) async {
     _state = _state.copyWith(isReplyLoading: true);
     notifyListeners();
@@ -291,5 +301,22 @@ class RoomBoardViewModel with ChangeNotifier {
     _state = _state.copyWith(comments: commentsList, isReplyLoading: false);
     notifyListeners();
   }
+
+  transCommentState(){
+    _state = _state.copyWith(commentState: true, replyState: false, commentFixState: false);
+    notifyListeners();
+  }
+
+  transReplyState(){
+    _state = _state.copyWith(commentState: false, replyState: true, commentFixState: false);
+    notifyListeners();
+  }
+
+  transCommentFixState(){
+    _state = _state.copyWith(commentState: false, replyState: false, commentFixState: true);
+    notifyListeners();
+  }
+
+
 
 }

@@ -22,6 +22,9 @@ RoomBoardState _$RoomBoardStateFromJson(Map<String, dynamic> json) {
 mixin _$RoomBoardState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isReplyLoading => throw _privateConstructorUsedError;
+  bool get commentState => throw _privateConstructorUsedError;
+  bool get replyState => throw _privateConstructorUsedError;
+  bool get commentFixState => throw _privateConstructorUsedError;
   Map<String, List<bool>> get mutableProgress =>
       throw _privateConstructorUsedError;
   List<Comment> get comments => throw _privateConstructorUsedError;
@@ -46,6 +49,9 @@ abstract class $RoomBoardStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool isReplyLoading,
+      bool commentState,
+      bool replyState,
+      bool commentFixState,
       Map<String, List<bool>> mutableProgress,
       List<Comment> comments,
       List<Reply> replies});
@@ -68,6 +74,9 @@ class _$RoomBoardStateCopyWithImpl<$Res, $Val extends RoomBoardState>
   $Res call({
     Object? isLoading = null,
     Object? isReplyLoading = null,
+    Object? commentState = null,
+    Object? replyState = null,
+    Object? commentFixState = null,
     Object? mutableProgress = null,
     Object? comments = null,
     Object? replies = null,
@@ -80,6 +89,18 @@ class _$RoomBoardStateCopyWithImpl<$Res, $Val extends RoomBoardState>
       isReplyLoading: null == isReplyLoading
           ? _value.isReplyLoading
           : isReplyLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      commentState: null == commentState
+          ? _value.commentState
+          : commentState // ignore: cast_nullable_to_non_nullable
+              as bool,
+      replyState: null == replyState
+          ? _value.replyState
+          : replyState // ignore: cast_nullable_to_non_nullable
+              as bool,
+      commentFixState: null == commentFixState
+          ? _value.commentFixState
+          : commentFixState // ignore: cast_nullable_to_non_nullable
               as bool,
       mutableProgress: null == mutableProgress
           ? _value.mutableProgress
@@ -108,6 +129,9 @@ abstract class _$$RoomBoardStateImplCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool isReplyLoading,
+      bool commentState,
+      bool replyState,
+      bool commentFixState,
       Map<String, List<bool>> mutableProgress,
       List<Comment> comments,
       List<Reply> replies});
@@ -128,6 +152,9 @@ class __$$RoomBoardStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? isReplyLoading = null,
+    Object? commentState = null,
+    Object? replyState = null,
+    Object? commentFixState = null,
     Object? mutableProgress = null,
     Object? comments = null,
     Object? replies = null,
@@ -140,6 +167,18 @@ class __$$RoomBoardStateImplCopyWithImpl<$Res>
       isReplyLoading: null == isReplyLoading
           ? _value.isReplyLoading
           : isReplyLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      commentState: null == commentState
+          ? _value.commentState
+          : commentState // ignore: cast_nullable_to_non_nullable
+              as bool,
+      replyState: null == replyState
+          ? _value.replyState
+          : replyState // ignore: cast_nullable_to_non_nullable
+              as bool,
+      commentFixState: null == commentFixState
+          ? _value.commentFixState
+          : commentFixState // ignore: cast_nullable_to_non_nullable
               as bool,
       mutableProgress: null == mutableProgress
           ? _value._mutableProgress
@@ -165,6 +204,9 @@ class _$RoomBoardStateImpl
   const _$RoomBoardStateImpl(
       {this.isLoading = false,
       this.isReplyLoading = false,
+      this.commentState = true,
+      this.replyState = false,
+      this.commentFixState = false,
       final Map<String, List<bool>> mutableProgress = const {},
       final List<Comment> comments = const [],
       final List<Reply> replies = const []})
@@ -181,6 +223,15 @@ class _$RoomBoardStateImpl
   @override
   @JsonKey()
   final bool isReplyLoading;
+  @override
+  @JsonKey()
+  final bool commentState;
+  @override
+  @JsonKey()
+  final bool replyState;
+  @override
+  @JsonKey()
+  final bool commentFixState;
   final Map<String, List<bool>> _mutableProgress;
   @override
   @JsonKey()
@@ -210,7 +261,7 @@ class _$RoomBoardStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RoomBoardState(isLoading: $isLoading, isReplyLoading: $isReplyLoading, mutableProgress: $mutableProgress, comments: $comments, replies: $replies)';
+    return 'RoomBoardState(isLoading: $isLoading, isReplyLoading: $isReplyLoading, commentState: $commentState, replyState: $replyState, commentFixState: $commentFixState, mutableProgress: $mutableProgress, comments: $comments, replies: $replies)';
   }
 
   @override
@@ -220,6 +271,9 @@ class _$RoomBoardStateImpl
       ..add(DiagnosticsProperty('type', 'RoomBoardState'))
       ..add(DiagnosticsProperty('isLoading', isLoading))
       ..add(DiagnosticsProperty('isReplyLoading', isReplyLoading))
+      ..add(DiagnosticsProperty('commentState', commentState))
+      ..add(DiagnosticsProperty('replyState', replyState))
+      ..add(DiagnosticsProperty('commentFixState', commentFixState))
       ..add(DiagnosticsProperty('mutableProgress', mutableProgress))
       ..add(DiagnosticsProperty('comments', comments))
       ..add(DiagnosticsProperty('replies', replies));
@@ -234,6 +288,12 @@ class _$RoomBoardStateImpl
                 other.isLoading == isLoading) &&
             (identical(other.isReplyLoading, isReplyLoading) ||
                 other.isReplyLoading == isReplyLoading) &&
+            (identical(other.commentState, commentState) ||
+                other.commentState == commentState) &&
+            (identical(other.replyState, replyState) ||
+                other.replyState == replyState) &&
+            (identical(other.commentFixState, commentFixState) ||
+                other.commentFixState == commentFixState) &&
             const DeepCollectionEquality()
                 .equals(other._mutableProgress, _mutableProgress) &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
@@ -246,6 +306,9 @@ class _$RoomBoardStateImpl
       runtimeType,
       isLoading,
       isReplyLoading,
+      commentState,
+      replyState,
+      commentFixState,
       const DeepCollectionEquality().hash(_mutableProgress),
       const DeepCollectionEquality().hash(_comments),
       const DeepCollectionEquality().hash(_replies));
@@ -271,6 +334,9 @@ abstract class _RoomBoardState implements RoomBoardState {
   const factory _RoomBoardState(
       {final bool isLoading,
       final bool isReplyLoading,
+      final bool commentState,
+      final bool replyState,
+      final bool commentFixState,
       final Map<String, List<bool>> mutableProgress,
       final List<Comment> comments,
       final List<Reply> replies}) = _$RoomBoardStateImpl;
@@ -282,6 +348,12 @@ abstract class _RoomBoardState implements RoomBoardState {
   bool get isLoading;
   @override
   bool get isReplyLoading;
+  @override
+  bool get commentState;
+  @override
+  bool get replyState;
+  @override
+  bool get commentFixState;
   @override
   Map<String, List<bool>> get mutableProgress;
   @override

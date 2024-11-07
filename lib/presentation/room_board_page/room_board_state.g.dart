@@ -10,6 +10,9 @@ _$RoomBoardStateImpl _$$RoomBoardStateImplFromJson(Map<String, dynamic> json) =>
     _$RoomBoardStateImpl(
       isLoading: json['isLoading'] as bool? ?? false,
       isReplyLoading: json['isReplyLoading'] as bool? ?? false,
+      commentState: json['commentState'] as bool? ?? true,
+      replyState: json['replyState'] as bool? ?? false,
+      commentFixState: json['commentFixState'] as bool? ?? false,
       mutableProgress: (json['mutableProgress'] as Map<String, dynamic>?)?.map(
             (k, e) => MapEntry(
                 k, (e as List<dynamic>).map((e) => e as bool).toList()),
@@ -30,6 +33,9 @@ Map<String, dynamic> _$$RoomBoardStateImplToJson(
     <String, dynamic>{
       'isLoading': instance.isLoading,
       'isReplyLoading': instance.isReplyLoading,
+      'commentState': instance.commentState,
+      'replyState': instance.replyState,
+      'commentFixState': instance.commentFixState,
       'mutableProgress': instance.mutableProgress,
       'comments': instance.comments,
       'replies': instance.replies,
