@@ -1,7 +1,9 @@
 import 'package:bhgh/data/repository/comment_repository_impl.dart';
 import 'package:bhgh/domain/usecase/get_room_board_comments_date_desc_use_case.dart';
 import 'package:bhgh/presentation/room_board_page/components/add_comment_container.dart';
+import 'package:bhgh/presentation/room_board_page/components/add_reply_container.dart';
 import 'package:bhgh/presentation/room_board_page/components/data_table_container.dart';
+import 'package:bhgh/presentation/room_board_page/components/fix_comment_container.dart';
 import 'package:bhgh/presentation/room_board_page/components/room_inform_column.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,15 +59,7 @@ class _RoomBoardScreenState extends State<RoomBoardScreen> {
                   // 방 정보 표시
                   RoomInformColumn(room: room),
                   // 주 단위로 나누어진 진척도 표
-                  ChangeNotifierProvider(
-                    create: (_) => RoomBoardViewModel(
-                      getMyRoomBoardCommentsDateAscUseCase:
-                          GetMyRoomBoardCommentsDateDescUseCase(
-                        commentRepository: CommentRepositoryImpl(),
-                      ),
-                    ),
-                    child: DataTableContainer(room: room),
-                  ),
+                  DataTableContainer(room: room),
                   // 댓글목록 view
                   Expanded(
                     child: state.isReplyLoading
@@ -80,7 +74,9 @@ class _RoomBoardScreenState extends State<RoomBoardScreen> {
                           ),
                   ),
                   // 댓글 입력란을 위한 공간
-                AddCommentContainer(room: room)
+                if(state.replyState) AddReplyContainer(room: room)
+                  else if(state.commentFixState) FixCommentContainer(room: room)
+                  else AddCommentContainer(room: room)
                 ],
               ),
             ),

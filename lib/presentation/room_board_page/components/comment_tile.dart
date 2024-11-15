@@ -60,16 +60,6 @@ class _CommentTileState extends State<CommentTile> {
                   ignoring: false,
                   child: comment.userId == viewModel.getUserId()
                       ? PopupMenuButton<String>(
-                    onSelected: (value) {
-                      if (value == 'delete') {
-                        viewModel.deleteComment(
-                            widget.comment.commentId, widget.room.roomId);
-                      } else if (value == 'edit') {
-                        // 댓글 수정 로직
-                      } else if (value == 'reply') {
-                        // 답글 달기 로직
-                      }
-                    },
                     itemBuilder: (BuildContext context) => [
                       const PopupMenuItem<String>(
                         value: 'delete',
@@ -84,6 +74,18 @@ class _CommentTileState extends State<CommentTile> {
                         child: Text('답글 달기'),
                       ),
                     ],
+                    onSelected: (value) {
+                      if (value == 'delete') {
+                        viewModel.deleteComment(
+                            widget.comment.commentId, widget.room.roomId);
+                      } else if (value == 'edit') {
+                        // 댓글 수정 로직
+                        viewModel.transCommentState();
+                      } else if (value == 'reply') {
+                        viewModel.transReplyState(comment.commentId);
+                        // 답글 달기 로직
+                      }
+                    },
                     //메뉴버튼
                     child: Container(
                       padding: const EdgeInsets.all(8.0),
@@ -96,17 +98,18 @@ class _CommentTileState extends State<CommentTile> {
                   )
                   // 댓글이 내가 쓴 글이 아닌 경우
                       : PopupMenuButton<String>(
-                    onSelected: (value) {
-                      if (value == 'reply') {
-                        // 답글 달기 로직
-                      }
-                    },
                     itemBuilder: (BuildContext context) => [
                       const PopupMenuItem<String>(
                         value: 'reply',
                         child: Text('답글 달기'),
                       ),
                     ],
+                    onSelected: (value) {
+                      if (value == 'reply') {
+                        //방 내부의 상태를 답글달기 상태로 변경 -> 입력 컨테이너 변경
+                        viewModel.transReplyState(comment.commentId);
+                      }
+                    },
                     //메뉴버튼
                     child: Container(
                       padding: const EdgeInsets.all(8.0),

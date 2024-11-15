@@ -213,7 +213,6 @@ class RoomBoardViewModel with ChangeNotifier {
         'roomId': roomId,
         'content': commentContent,
         'timestamp': DateTime.now(),
-        'replies': [], // 초기에는 빈 답글 리스트
       };
 
       // 댓글을 Firestore에 저장
@@ -248,8 +247,7 @@ class RoomBoardViewModel with ChangeNotifier {
   }
   //댓글 수정
 
-
-  //답글 달기
+ // 답글 달기
   Future<void> addReply(String commentId, String replyContent) async {
     try {
       String userId = getUserId();
@@ -271,13 +269,6 @@ class RoomBoardViewModel with ChangeNotifier {
       commentDoc.collection('replies').doc(); // 자동 생성된 답글 문서 ID
 
       // 답글 데이터를 Firestore에 저장
-      // ...replyData: replyData 맵에 있는 기존 데이터(userId, content, timestamp 필드들)를 새 맵에 추가합니다.
-      // ...(스프레드 연산자)는 replyData의 모든 키-값 쌍을 펼쳐서 새 맵에 넣어줍니다.
-
-  /*'replyId': '',
-    'userId': userId,
-    'content': replyContent,
-    'timestamp': DateTime.now() 와 동일 함*/
       await newReplyDoc.set({
         ...replyData,
         'replyId': newReplyDoc.id, // 자동 생성된 답글 ID 설정
@@ -303,17 +294,20 @@ class RoomBoardViewModel with ChangeNotifier {
   }
 
   transCommentState(){
-    _state = _state.copyWith(commentState: true, replyState: false, commentFixState: false);
+    _state = _state.copyWith(commentState: true, replyState: false, commentFixState: false, targetCommentId: "");
+    print(_state);
     notifyListeners();
   }
 
-  transReplyState(){
-    _state = _state.copyWith(commentState: false, replyState: true, commentFixState: false);
+  transReplyState(String targetId){
+    _state = _state.copyWith(commentState: false, replyState: true, commentFixState: false, targetCommentId: targetId);
+    print(_state);
     notifyListeners();
   }
 
   transCommentFixState(){
     _state = _state.copyWith(commentState: false, replyState: false, commentFixState: true);
+    print(_state);
     notifyListeners();
   }
 

@@ -1,22 +1,21 @@
-import 'package:bhgh/core/router/router.dart';
-import 'package:bhgh/presentation/room_board_page/room_board_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../domain/model/room.dart';
+import '../room_board_view_model.dart';
 
-class AddCommentContainer extends StatefulWidget {
-  const AddCommentContainer({super.key, required this.room});
+class FixCommentContainer extends StatefulWidget {
+  const FixCommentContainer({super.key, required this.room});
 
   final Room room;
 
   @override
-  State<AddCommentContainer> createState() => _AddCommentContainerState();
+  State<FixCommentContainer> createState() => _FixCommentContainerState();
 }
 
-class _AddCommentContainerState extends State<AddCommentContainer> {
+class _FixCommentContainerState extends State<FixCommentContainer> {
   final TextEditingController _commentTextEditingController =
-  TextEditingController();
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +26,7 @@ class _AddCommentContainerState extends State<AddCommentContainer> {
       color: Colors.grey[200],
       child: Row(
         children: [
+          if (state.commentState)
             Expanded(
               child: TextField(
                 controller: _commentTextEditingController,
@@ -39,8 +39,8 @@ class _AddCommentContainerState extends State<AddCommentContainer> {
           IconButton(
             icon: Icon(Icons.send),
             onPressed: () {
-              viewModel.addComment(widget.room.roomId,
-                  _commentTextEditingController.text);
+              viewModel.addComment(
+                  widget.room.roomId, _commentTextEditingController.text);
               _commentTextEditingController.clear();
               FocusScope.of(context).unfocus();
             },

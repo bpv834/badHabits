@@ -26,6 +26,7 @@ _$RoomBoardStateImpl _$$RoomBoardStateImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => Reply.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      targetCommentId: json['targetCommentId'] as String? ?? "",
     );
 
 Map<String, dynamic> _$$RoomBoardStateImplToJson(
@@ -39,4 +40,5 @@ Map<String, dynamic> _$$RoomBoardStateImplToJson(
       'mutableProgress': instance.mutableProgress,
       'comments': instance.comments,
       'replies': instance.replies,
+      'targetCommentId': instance.targetCommentId,
     };

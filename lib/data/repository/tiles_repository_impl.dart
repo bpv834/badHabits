@@ -14,6 +14,4 @@ class TilesRepositoryImpl implements TilesRepository{
     _snapshot.docs.map((e) => UserTiles.fromJson(e.data())).toList();
     return result;
   }
-
-
 }
