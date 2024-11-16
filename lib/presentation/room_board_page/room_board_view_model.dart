@@ -289,6 +289,10 @@ class RoomBoardViewModel with ChangeNotifier {
 
     List<Comment> commentsList = await _getMyRoomBoardCommentsDateAscUseCase
         .execute(roomId);
+
+    // 댓글에 해당 답글들 넣기
+
+
     _state = _state.copyWith(comments: commentsList, isReplyLoading: false);
     notifyListeners();
   }

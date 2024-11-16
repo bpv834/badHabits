@@ -9,10 +9,12 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:bhgh/data/repository/comment_repository_impl.dart' as _i105;
+import 'package:bhgh/data/repository/reply_repository_impl.dart' as _i284;
 import 'package:bhgh/data/repository/room_repository_impl.dart' as _i766;
 import 'package:bhgh/data/repository/tiles_repository_impl.dart' as _i719;
 import 'package:bhgh/data/repository/user_repository_impl.dart' as _i284;
 import 'package:bhgh/domain/repository/comment_repository.dart' as _i793;
+import 'package:bhgh/domain/repository/reply_repository.dart' as _i366;
 import 'package:bhgh/domain/repository/room_repository.dart' as _i982;
 import 'package:bhgh/domain/repository/tiles_repository.dart' as _i1072;
 import 'package:bhgh/domain/repository/user_repository.dart' as _i241;
@@ -24,6 +26,7 @@ import 'package:bhgh/domain/usecase/get_my_pending_rooms_use_case.dart'
     as _i823;
 import 'package:bhgh/domain/usecase/get_my_running_rooms_use_case.dart'
     as _i740;
+import 'package:bhgh/domain/usecase/get_replies_desc_use_case.dart' as _i452;
 import 'package:bhgh/domain/usecase/get_room_board_comments_date_desc_use_case.dart'
     as _i885;
 import 'package:bhgh/domain/usecase/get_rooms_use_case.dart' as _i300;
@@ -70,17 +73,15 @@ extension GetItInjectableX on _i174.GetIt {
         _i300.GetRoomsUseCase(roomRepository: gh<_i982.RoomRepository>()));
     gh.singleton<_i1072.TilesRepository>(() => _i719.TilesRepositoryImpl());
     gh.singleton<_i241.UserRepository>(() => _i284.UserRepositoryImpl());
-    gh.singleton<_i793.CommentRepository>(() => _i105.CommentRepositoryImpl());
+    gh.singleton<_i366.ReplyRepository>(() => _i284.ReplyRepositoryImpl());
     gh.factory<_i136.RoomViewModel>(
         () => _i136.RoomViewModel(gh<_i300.GetRoomsUseCase>()));
+    gh.singleton<_i452.GetRepliesDescUseCase>(() => _i452.GetRepliesDescUseCase(
+        replyRepository: gh<_i366.ReplyRepository>()));
     gh.singleton<_i336.GetUserTilesAscUseCase>(
         () => _i336.GetUserTilesAscUseCase(gh<_i1072.TilesRepository>()));
-    gh.singleton<_i885.GetMyRoomBoardCommentsDateDescUseCase>(() =>
-        _i885.GetMyRoomBoardCommentsDateDescUseCase(
-            commentRepository: gh<_i793.CommentRepository>()));
-    gh.factory<_i596.RoomBoardViewModel>(() => _i596.RoomBoardViewModel(
-        getMyRoomBoardCommentsDateAscUseCase:
-            gh<_i885.GetMyRoomBoardCommentsDateDescUseCase>()));
+    gh.singleton<_i793.CommentRepository>(() => _i105.CommentRepositoryImpl(
+        getRepliesDescUseCase: gh<_i452.GetRepliesDescUseCase>()));
     gh.singleton<_i467.GetUserAscUseCase>(
         () => _i467.GetUserAscUseCase(gh<_i241.UserRepository>()));
     gh.factory<_i198.MyViewModel>(() => _i198.MyViewModel(
@@ -94,6 +95,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i467.GetUserAscUseCase>(),
           gh<_i336.GetUserTilesAscUseCase>(),
         ));
+    gh.singleton<_i885.GetMyRoomBoardCommentsDateDescUseCase>(() =>
+        _i885.GetMyRoomBoardCommentsDateDescUseCase(
+            commentRepository: gh<_i793.CommentRepository>()));
+    gh.factory<_i596.RoomBoardViewModel>(() => _i596.RoomBoardViewModel(
+        getMyRoomBoardCommentsDateAscUseCase:
+            gh<_i885.GetMyRoomBoardCommentsDateDescUseCase>()));
     return this;
   }
 }

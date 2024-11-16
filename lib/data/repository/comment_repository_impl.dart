@@ -1,12 +1,19 @@
 import 'package:bhgh/domain/model/comment.dart';
+import 'package:bhgh/domain/model/reply.dart';
+import 'package:bhgh/domain/repository/reply_repository.dart';
+import 'package:bhgh/domain/usecase/get_replies_desc_use_case.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/repository/comment_repository.dart';
 
 @Singleton(as: CommentRepository)
 class CommentRepositoryImpl implements CommentRepository {
-  @override
+
+final  GetRepliesDescUseCase _getRepliesDescUseCase;
+
+  CommentRepositoryImpl({required GetRepliesDescUseCase getRepliesDescUseCase}) : _getRepliesDescUseCase = getRepliesDescUseCase;@override
   Future<List<Comment>> getComments(String roomId) async {
     try {
       final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -30,6 +37,13 @@ class CommentRepositoryImpl implements CommentRepository {
         // Comment 모델로 변환
         return Comment.fromJson(data);
       }).toList();
+
+ /*     //해당 답글 넣어주기
+     comments.map((e)async{
+       List<Reply> replies = await _getRepliesDescUseCase.executeDesc(e.commentId);
+       e.replies.addAll(replies);
+     });
+*/
 
       return comments; // 댓글 리스트 반환
     } catch (e) {
