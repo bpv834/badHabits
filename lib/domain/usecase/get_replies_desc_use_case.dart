@@ -9,7 +9,7 @@ class GetRepliesDescUseCase {
 
   GetRepliesDescUseCase({required ReplyRepository replyRepository}) : _replyRepository = replyRepository;
 
-  Future<List<Reply>> executeDesc(String commentId) async {
+  Future<List<Reply>> execute(String commentId) async {
     // Replies 가져오기
     List<Reply> replies = await _replyRepository.getReplies(commentId);
 

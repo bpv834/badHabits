@@ -48,7 +48,7 @@ class _AddReplyContainerState extends State<AddReplyContainer> {
 
                   if (replyText.isNotEmpty) {
                     print("${state.targetCommentId}, $replyText");
-                    viewModel.addReply(state.targetCommentId, replyText);
+                    viewModel.addReply(widget.room.roomId,state.targetCommentId, replyText);
                     _replyTextEditingController.clear();
                     FocusScope.of(context).unfocus(); // 키보드 닫기
                   }

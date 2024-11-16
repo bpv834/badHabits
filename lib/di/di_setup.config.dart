@@ -99,8 +99,10 @@ extension GetItInjectableX on _i174.GetIt {
         _i885.GetMyRoomBoardCommentsDateDescUseCase(
             commentRepository: gh<_i793.CommentRepository>()));
     gh.factory<_i596.RoomBoardViewModel>(() => _i596.RoomBoardViewModel(
-        getMyRoomBoardCommentsDateAscUseCase:
-            gh<_i885.GetMyRoomBoardCommentsDateDescUseCase>()));
+          getMyRoomBoardCommentsDateAscUseCase:
+              gh<_i885.GetMyRoomBoardCommentsDateDescUseCase>(),
+          getRepliesDescUseCase: gh<_i452.GetRepliesDescUseCase>(),
+        ));
     return this;
   }
 }

@@ -1,5 +1,5 @@
-import 'package:bhgh/domain/model/comment.dart';
-import 'package:bhgh/domain/usecase/get_room_board_comments_date_desc_use_case.dart';
+import 'package:bhgh/domain/model/reply.dart';
+import 'package:bhgh/domain/usecase/get_replies_desc_use_case.dart';
 import 'package:bhgh/presentation/room_board_page/room_board_state.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,20 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
+import '../../domain/model/comment.dart';
 import '../../domain/model/room.dart';
+import '../../domain/usecase/get_room_board_comments_date_desc_use_case.dart';
 
 @injectable
 class RoomBoardViewModel with ChangeNotifier {
-  final GetMyRoomBoardCommentsDateDescUseCase _getMyRoomBoardCommentsDateAscUseCase;
+  final GetMyRoomBoardCommentsDateDescUseCase
+      _getMyRoomBoardCommentsDateAscUseCase;
+  final GetRepliesDescUseCase _getRepliesDescUseCase;
 
   RoomBoardState _state = const RoomBoardState();
 
-  RoomBoardViewModel(
-      {required GetMyRoomBoardCommentsDateDescUseCase getMyRoomBoardCommentsDateAscUseCase})
-      : _getMyRoomBoardCommentsDateAscUseCase = getMyRoomBoardCommentsDateAscUseCase {}
+  RoomBoardViewModel({required GetMyRoomBoardCommentsDateDescUseCase getMyRoomBoardCommentsDateAscUseCase, required GetRepliesDescUseCase getRepliesDescUseCase}) : _getMyRoomBoardCommentsDateAscUseCase = getMyRoomBoardCommentsDateAscUseCase, _getRepliesDescUseCase = getRepliesDescUseCase;
+
+
 
   RoomBoardState get state => _state;
-
 
   // 날짜 기준 Column 생성 (7일 고정)
   //startDate.add(Duration(days: i))는 주어진 날짜 startDate에 특정한 기간(Duration)을 더해 새로운 DateTime 객체를 반환하는 메서드
@@ -35,10 +38,10 @@ class RoomBoardViewModel with ChangeNotifier {
     weeksCount = duration == '1주'
         ? 1
         : duration == '2주'
-        ? 2
-        : duration == '3주'
-        ? 3
-        : 4; // 기본값
+            ? 2
+            : duration == '3주'
+                ? 3
+                : 4; // 기본값
 
     return weeksCount;
   }
@@ -73,8 +76,8 @@ class RoomBoardViewModel with ChangeNotifier {
   }
 
   // 진척도의 상태를 파이어베이스에 post하는 메서드
-  Future<void> postProgressToFireBase(Map<String, List<bool>> progress,
-      Room room) async {
+  Future<void> postProgressToFireBase(
+      Map<String, List<bool>> progress, Room room) async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
 
     final roomRef = db.collection('rooms').doc(room.roomId);
@@ -82,8 +85,8 @@ class RoomBoardViewModel with ChangeNotifier {
   }
 
   // 진척도 업데이트 메서드 (progress update function)
-  Future<void> updateProgress(Room room, String member, int index,
-      DateTime date) async {
+  Future<void> updateProgress(
+      Room room, String member, int index, DateTime date) async {
     if (member == getUserId()) {
       DateTime now = DateTime.now().toLocal();
 
@@ -101,7 +104,7 @@ class RoomBoardViewModel with ChangeNotifier {
       notifyListeners();
 
       final updatedProgress =
-      Map<String, List<bool>>.from(_state.mutableProgress);
+          Map<String, List<bool>>.from(_state.mutableProgress);
 
       if (updatedProgress[member] == null) {
         updatedProgress[member] = List.filled(28, false);
@@ -123,8 +126,8 @@ class RoomBoardViewModel with ChangeNotifier {
   }
 
 // 진척도의 행을 생성
-  List<DataRow> generateDataRows(List<DateTime> weekDates, Room room,
-      List<DateTime> dates) {
+  List<DataRow> generateDataRows(
+      List<DateTime> weekDates, Room room, List<DateTime> dates) {
     List<String> members = room.members;
     _state = _state.copyWith(
         mutableProgress: Map<String, List<bool>>.from(room.progress ?? {}));
@@ -227,6 +230,10 @@ class RoomBoardViewModel with ChangeNotifier {
   // 댓글 삭제
   Future<void> deleteComment(String commentId, String roomId) async {
     try {
+      // FocusScope.of(context).unfocus() => 현재 주어진 BuildContext를 기준으로 가장 가까운 FocusScope 위젯을 찾아 포커스를 해제합니다.
+      // Flutter 앱 내에서 어디에 있든 현재 포커스를 가진 위젯(예: 활성화된 TextField)을 해제합니다.
+      // 어디서든 키보드를 강제로 내리고 싶을 때.
+    /*  FocusManager.instance.primaryFocus?.unfocus();*/
       _state = _state.copyWith(isReplyLoading: true);
       notifyListeners();
 
@@ -245,10 +252,11 @@ class RoomBoardViewModel with ChangeNotifier {
       print('Failed to delete comment: $e');
     }
   }
+
   //댓글 수정
 
- // 답글 달기
-  Future<void> addReply(String commentId, String replyContent) async {
+  // 답글 달기
+  Future<void> addReply(String roomId, String commentId, String replyContent) async {
     try {
       String userId = getUserId();
       final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -266,13 +274,19 @@ class RoomBoardViewModel with ChangeNotifier {
 
       // 새로운 답글 문서 생성
       final newReplyDoc =
-      commentDoc.collection('replies').doc(); // 자동 생성된 답글 문서 ID
+          commentDoc.collection('replies').doc(); // 자동 생성된 답글 문서 ID
 
       // 답글 데이터를 Firestore에 저장
       await newReplyDoc.set({
         ...replyData,
         'replyId': newReplyDoc.id, // 자동 생성된 답글 ID 설정
       });
+
+      // 답글 달고 난 후, 댓글을 다시 불러온다음, 상태를 변경해줘야 함
+      getCommentsByRoom(roomId);
+      transCommentState();
+
+
 
       // UI 갱신
       notifyListeners();
@@ -282,39 +296,54 @@ class RoomBoardViewModel with ChangeNotifier {
     }
   }
 
-  //roomId를 이용해 댓글을 읽어오는 메서드
+  //룸보드의 댓글 불러오기
   Future<void> getCommentsByRoom(String roomId) async {
+    // 로딩 상태 업데이트
     _state = _state.copyWith(isReplyLoading: true);
     notifyListeners();
 
-    List<Comment> commentsList = await _getMyRoomBoardCommentsDateAscUseCase
-        .execute(roomId);
+    // 댓글 리스트 가져오기
+    List<Comment> commentsList =
+    await _getMyRoomBoardCommentsDateAscUseCase.execute(roomId);
 
-    // 댓글에 해당 답글들 넣기
+    // 모든 댓글에 대한 답글 데이터를 비동기적으로 가져오기
+    // model 클래스는 불변이므로 model을 copy 후 새로운 model 클래스 생성해서 답글 넣어주고 리턴
+    List<Comment> updatedComments = await Future.wait(commentsList.map((comment) async {
+      List<Reply> replies = await _getRepliesDescUseCase.execute(comment.commentId);
+      // 새로운 Comment 객체 반환
+      return comment.copyWith(replies: [...comment.replies, ...replies]); // 해당 답글 주입
+    }));
 
-
-    _state = _state.copyWith(comments: commentsList, isReplyLoading: false);
+    // 상태 업데이트
+    _state = _state.copyWith(comments: updatedComments, isReplyLoading: false);
     notifyListeners();
   }
 
-  transCommentState(){
-    _state = _state.copyWith(commentState: true, replyState: false, commentFixState: false, targetCommentId: "");
+
+  transCommentState() {
+    _state = _state.copyWith(
+        commentState: true,
+        replyState: false,
+        commentFixState: false,
+        targetCommentId: "");
     print(_state);
     notifyListeners();
   }
 
-  transReplyState(String targetId){
-    _state = _state.copyWith(commentState: false, replyState: true, commentFixState: false, targetCommentId: targetId);
+  transReplyState(String targetId) {
+    _state = _state.copyWith(
+        commentState: false,
+        replyState: true,
+        commentFixState: false,
+        targetCommentId: targetId);
     print(_state);
     notifyListeners();
   }
 
-  transCommentFixState(){
-    _state = _state.copyWith(commentState: false, replyState: false, commentFixState: true);
+  transCommentFixState() {
+    _state = _state.copyWith(
+        commentState: false, replyState: false, commentFixState: true);
     print(_state);
     notifyListeners();
   }
-
-
-
 }
