@@ -6,47 +6,59 @@ import '../room_board_view_model.dart';
 
 class FixCommentContainer extends StatefulWidget {
   const FixCommentContainer({super.key, required this.room});
-
   final Room room;
-
   @override
   State<FixCommentContainer> createState() => _FixCommentContainerState();
 }
 
 class _FixCommentContainerState extends State<FixCommentContainer> {
-  final TextEditingController _commentTextEditingController =
-      TextEditingController();
+  final TextEditingController _fixTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final room = widget.room;
     final viewModel = context.watch<RoomBoardViewModel>();
     final state = viewModel.state;
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      color: Colors.grey[200],
-      child: Row(
-        children: [
-          if (state.commentState)
-            Expanded(
-              child: TextField(
-                controller: _commentTextEditingController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: '댓글을 입력하세요...',
+    _fixTextEditingController.text = "${state.targetComment!.content}";
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        IconButton(
+            onPressed: () {
+              viewModel.transCommentState();
+            },
+            icon: Icon(Icons.close)),
+        Container(
+          padding: const EdgeInsets.all(8.0),
+          color: Colors.red[200], // 배경색 설정
+          child: Row(
+            children: [
+              Flexible(
+                child: TextField(
+                  controller: _fixTextEditingController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: '답글을 입력하세요...',
+                  ),
                 ),
               ),
-            ),
-          IconButton(
-            icon: Icon(Icons.send),
-            onPressed: () {
-              viewModel.addComment(
-                  widget.room.roomId, _commentTextEditingController.text);
-              _commentTextEditingController.clear();
-              FocusScope.of(context).unfocus();
-            },
+              IconButton(
+                icon: const Icon(Icons.send),
+                onPressed: () {
+                  final fixedText = _fixTextEditingController.text.trim();
+
+                  if (fixedText.isNotEmpty) {
+                    // 수정 메서드 생성
+                    viewModel.fixComment(room, state.targetComment!, fixedText);
+                    _fixTextEditingController.clear();
+                    FocusScope.of(context).unfocus(); // 키보드 닫기
+                  }
+                },
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

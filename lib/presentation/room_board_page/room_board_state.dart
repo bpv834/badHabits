@@ -18,7 +18,7 @@ class RoomBoardState with _$RoomBoardState {
     @Default({}) Map<String, List<bool>> mutableProgress,
     @Default([]) List<Comment> comments,
     @Default([]) List<Reply> replies,
-    @Default("") String targetCommentId, // 어디에 답글을 달것인가?
+    Comment? targetComment, // 어디에 답글을 달것인가?
   }) = _RoomBoardState;
 
   factory RoomBoardState.fromJson(Map<String, Object?> json) =>

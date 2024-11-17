@@ -19,9 +19,13 @@ class RoomBoardViewModel with ChangeNotifier {
 
   RoomBoardState _state = const RoomBoardState();
 
-  RoomBoardViewModel({required GetMyRoomBoardCommentsDateDescUseCase getMyRoomBoardCommentsDateAscUseCase, required GetRepliesDescUseCase getRepliesDescUseCase}) : _getMyRoomBoardCommentsDateAscUseCase = getMyRoomBoardCommentsDateAscUseCase, _getRepliesDescUseCase = getRepliesDescUseCase;
-
-
+  RoomBoardViewModel(
+      {required GetMyRoomBoardCommentsDateDescUseCase
+          getMyRoomBoardCommentsDateAscUseCase,
+      required GetRepliesDescUseCase getRepliesDescUseCase})
+      : _getMyRoomBoardCommentsDateAscUseCase =
+            getMyRoomBoardCommentsDateAscUseCase,
+        _getRepliesDescUseCase = getRepliesDescUseCase;
 
   RoomBoardState get state => _state;
 
@@ -233,7 +237,7 @@ class RoomBoardViewModel with ChangeNotifier {
       // FocusScope.of(context).unfocus() => 현재 주어진 BuildContext를 기준으로 가장 가까운 FocusScope 위젯을 찾아 포커스를 해제합니다.
       // Flutter 앱 내에서 어디에 있든 현재 포커스를 가진 위젯(예: 활성화된 TextField)을 해제합니다.
       // 어디서든 키보드를 강제로 내리고 싶을 때.
-    /*  FocusManager.instance.primaryFocus?.unfocus();*/
+      /*  FocusManager.instance.primaryFocus?.unfocus();*/
       _state = _state.copyWith(isReplyLoading: true);
       notifyListeners();
 
@@ -253,10 +257,37 @@ class RoomBoardViewModel with ChangeNotifier {
     }
   }
 
-  //댓글 수정
+  // 댓글 수정 함수
+  Future<void> fixComment(Room room, Comment comment, String fixedComment) async {
+    try {
+      /*_state= state.copyWith(isReplyLoading: true);
+      notifyListeners();*/
+      // Firestore 인스턴스 참조
+      final _firestore = FirebaseFirestore.instance;
+
+      // 'comments' 컬렉션에서 해당 댓글 문서 참조
+      final commentDocRef = _firestore
+          .collection('comments')
+          .doc(comment.commentId); // 특정 댓글 ID 기반으로 문서 참조
+
+      // Firestore에서 해당 댓글 데이터 업데이트
+      await commentDocRef.update({
+        'content': fixedComment, // 수정할 댓글 내용
+        'updatedAt': FieldValue.serverTimestamp(), // 수정 시간 업데이트
+      });
+
+      //댓글 수정 후 댓글 다시 가져오기
+      getCommentsByRoom(room.roomId);
+      transCommentState();
+      print("Comment updated successfully");
+    } catch (e) {
+      print("Error updating comment: $e");
+    }
+  }
 
   // 답글 달기
-  Future<void> addReply(String roomId, String commentId, String replyContent) async {
+  Future<void> addReply(
+      String roomId, String commentId, String replyContent) async {
     try {
       String userId = getUserId();
       final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -286,8 +317,6 @@ class RoomBoardViewModel with ChangeNotifier {
       getCommentsByRoom(roomId);
       transCommentState();
 
-
-
       // UI 갱신
       notifyListeners();
     } catch (e) {
@@ -304,14 +333,17 @@ class RoomBoardViewModel with ChangeNotifier {
 
     // 댓글 리스트 가져오기
     List<Comment> commentsList =
-    await _getMyRoomBoardCommentsDateAscUseCase.execute(roomId);
+        await _getMyRoomBoardCommentsDateAscUseCase.execute(roomId);
 
     // 모든 댓글에 대한 답글 데이터를 비동기적으로 가져오기
     // model 클래스는 불변이므로 model을 copy 후 새로운 model 클래스 생성해서 답글 넣어주고 리턴
-    List<Comment> updatedComments = await Future.wait(commentsList.map((comment) async {
-      List<Reply> replies = await _getRepliesDescUseCase.execute(comment.commentId);
+    List<Comment> updatedComments =
+        await Future.wait(commentsList.map((comment) async {
+      List<Reply> replies =
+          await _getRepliesDescUseCase.execute(comment.commentId);
       // 새로운 Comment 객체 반환
-      return comment.copyWith(replies: [...comment.replies, ...replies]); // 해당 답글 주입
+      return comment
+          .copyWith(replies: [...comment.replies, ...replies]); // 해당 답글 주입
     }));
 
     // 상태 업데이트
@@ -319,30 +351,32 @@ class RoomBoardViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-
   transCommentState() {
     _state = _state.copyWith(
         commentState: true,
         replyState: false,
         commentFixState: false,
-        targetCommentId: "");
+        targetComment: null);
     print(_state);
     notifyListeners();
   }
 
-  transReplyState(String targetId) {
+  transReplyState(Comment comment) {
     _state = _state.copyWith(
         commentState: false,
         replyState: true,
         commentFixState: false,
-        targetCommentId: targetId);
+        targetComment: comment); // 답글 달 커멘트 id
     print(_state);
     notifyListeners();
   }
 
-  transCommentFixState() {
+  transCommentFixState(Comment comment) {
     _state = _state.copyWith(
-        commentState: false, replyState: false, commentFixState: true);
+        commentState: false,
+        replyState: false,
+        commentFixState: true,
+        targetComment: comment);
     print(_state);
     notifyListeners();
   }

@@ -80,9 +80,9 @@ class _CommentTileState extends State<CommentTile> {
                             widget.comment.commentId, widget.room.roomId);
                       } else if (value == 'edit') {
                         // 댓글 수정 로직
-                        viewModel.transCommentState();
+                        viewModel.transCommentFixState(comment);
                       } else if (value == 'reply') {
-                        viewModel.transReplyState(comment.commentId);
+                        viewModel.transReplyState(comment);
                         // 답글 달기 로직
                       }
                     },
@@ -107,7 +107,7 @@ class _CommentTileState extends State<CommentTile> {
                     onSelected: (value) {
                       if (value == 'reply') {
                         //방 내부의 상태를 답글달기 상태로 변경 -> 입력 컨테이너 변경
-                        viewModel.transReplyState(comment.commentId);
+                        viewModel.transReplyState(comment);
                       }
                     },
                     //메뉴버튼

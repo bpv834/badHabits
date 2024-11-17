@@ -24,9 +24,11 @@ class _AddReplyContainerState extends State<AddReplyContainer> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        IconButton(onPressed: (){
-          viewModel.transCommentState();
-        }, icon: Icon(Icons.close)),
+        IconButton(
+            onPressed: () {
+              viewModel.transCommentState();
+            },
+            icon: Icon(Icons.close)),
         Container(
           padding: const EdgeInsets.all(8.0),
           color: Colors.red[200], // 배경색 설정
@@ -47,8 +49,7 @@ class _AddReplyContainerState extends State<AddReplyContainer> {
                   final replyText = _replyTextEditingController.text.trim();
 
                   if (replyText.isNotEmpty) {
-                    print("${state.targetCommentId}, $replyText");
-                    viewModel.addReply(widget.room.roomId,state.targetCommentId, replyText);
+                    viewModel.addReply(widget.room.roomId, state.targetComment!.commentId, replyText);
                     _replyTextEditingController.clear();
                     FocusScope.of(context).unfocus(); // 키보드 닫기
                   }

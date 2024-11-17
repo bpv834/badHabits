@@ -29,7 +29,7 @@ mixin _$RoomBoardState {
       throw _privateConstructorUsedError;
   List<Comment> get comments => throw _privateConstructorUsedError;
   List<Reply> get replies => throw _privateConstructorUsedError;
-  String get targetCommentId => throw _privateConstructorUsedError;
+  Comment? get targetComment => throw _privateConstructorUsedError;
 
   /// Serializes this RoomBoardState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,7 +56,9 @@ abstract class $RoomBoardStateCopyWith<$Res> {
       Map<String, List<bool>> mutableProgress,
       List<Comment> comments,
       List<Reply> replies,
-      String targetCommentId});
+      Comment? targetComment});
+
+  $CommentCopyWith<$Res>? get targetComment;
 }
 
 /// @nodoc
@@ -82,7 +84,7 @@ class _$RoomBoardStateCopyWithImpl<$Res, $Val extends RoomBoardState>
     Object? mutableProgress = null,
     Object? comments = null,
     Object? replies = null,
-    Object? targetCommentId = null,
+    Object? targetComment = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -117,11 +119,25 @@ class _$RoomBoardStateCopyWithImpl<$Res, $Val extends RoomBoardState>
           ? _value.replies
           : replies // ignore: cast_nullable_to_non_nullable
               as List<Reply>,
-      targetCommentId: null == targetCommentId
-          ? _value.targetCommentId
-          : targetCommentId // ignore: cast_nullable_to_non_nullable
-              as String,
+      targetComment: freezed == targetComment
+          ? _value.targetComment
+          : targetComment // ignore: cast_nullable_to_non_nullable
+              as Comment?,
     ) as $Val);
+  }
+
+  /// Create a copy of RoomBoardState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CommentCopyWith<$Res>? get targetComment {
+    if (_value.targetComment == null) {
+      return null;
+    }
+
+    return $CommentCopyWith<$Res>(_value.targetComment!, (value) {
+      return _then(_value.copyWith(targetComment: value) as $Val);
+    });
   }
 }
 
@@ -142,7 +158,10 @@ abstract class _$$RoomBoardStateImplCopyWith<$Res>
       Map<String, List<bool>> mutableProgress,
       List<Comment> comments,
       List<Reply> replies,
-      String targetCommentId});
+      Comment? targetComment});
+
+  @override
+  $CommentCopyWith<$Res>? get targetComment;
 }
 
 /// @nodoc
@@ -166,7 +185,7 @@ class __$$RoomBoardStateImplCopyWithImpl<$Res>
     Object? mutableProgress = null,
     Object? comments = null,
     Object? replies = null,
-    Object? targetCommentId = null,
+    Object? targetComment = freezed,
   }) {
     return _then(_$RoomBoardStateImpl(
       isLoading: null == isLoading
@@ -201,10 +220,10 @@ class __$$RoomBoardStateImplCopyWithImpl<$Res>
           ? _value._replies
           : replies // ignore: cast_nullable_to_non_nullable
               as List<Reply>,
-      targetCommentId: null == targetCommentId
-          ? _value.targetCommentId
-          : targetCommentId // ignore: cast_nullable_to_non_nullable
-              as String,
+      targetComment: freezed == targetComment
+          ? _value.targetComment
+          : targetComment // ignore: cast_nullable_to_non_nullable
+              as Comment?,
     ));
   }
 }
@@ -223,7 +242,7 @@ class _$RoomBoardStateImpl
       final Map<String, List<bool>> mutableProgress = const {},
       final List<Comment> comments = const [],
       final List<Reply> replies = const [],
-      this.targetCommentId = ""})
+      this.targetComment})
       : _mutableProgress = mutableProgress,
         _comments = comments,
         _replies = replies;
@@ -274,12 +293,11 @@ class _$RoomBoardStateImpl
   }
 
   @override
-  @JsonKey()
-  final String targetCommentId;
+  final Comment? targetComment;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RoomBoardState(isLoading: $isLoading, isReplyLoading: $isReplyLoading, commentState: $commentState, replyState: $replyState, commentFixState: $commentFixState, mutableProgress: $mutableProgress, comments: $comments, replies: $replies, targetCommentId: $targetCommentId)';
+    return 'RoomBoardState(isLoading: $isLoading, isReplyLoading: $isReplyLoading, commentState: $commentState, replyState: $replyState, commentFixState: $commentFixState, mutableProgress: $mutableProgress, comments: $comments, replies: $replies, targetComment: $targetComment)';
   }
 
   @override
@@ -295,7 +313,7 @@ class _$RoomBoardStateImpl
       ..add(DiagnosticsProperty('mutableProgress', mutableProgress))
       ..add(DiagnosticsProperty('comments', comments))
       ..add(DiagnosticsProperty('replies', replies))
-      ..add(DiagnosticsProperty('targetCommentId', targetCommentId));
+      ..add(DiagnosticsProperty('targetComment', targetComment));
   }
 
   @override
@@ -317,8 +335,8 @@ class _$RoomBoardStateImpl
                 .equals(other._mutableProgress, _mutableProgress) &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
             const DeepCollectionEquality().equals(other._replies, _replies) &&
-            (identical(other.targetCommentId, targetCommentId) ||
-                other.targetCommentId == targetCommentId));
+            (identical(other.targetComment, targetComment) ||
+                other.targetComment == targetComment));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -333,7 +351,7 @@ class _$RoomBoardStateImpl
       const DeepCollectionEquality().hash(_mutableProgress),
       const DeepCollectionEquality().hash(_comments),
       const DeepCollectionEquality().hash(_replies),
-      targetCommentId);
+      targetComment);
 
   /// Create a copy of RoomBoardState
   /// with the given fields replaced by the non-null parameter values.
@@ -362,7 +380,7 @@ abstract class _RoomBoardState implements RoomBoardState {
       final Map<String, List<bool>> mutableProgress,
       final List<Comment> comments,
       final List<Reply> replies,
-      final String targetCommentId}) = _$RoomBoardStateImpl;
+      final Comment? targetComment}) = _$RoomBoardStateImpl;
 
   factory _RoomBoardState.fromJson(Map<String, dynamic> json) =
       _$RoomBoardStateImpl.fromJson;
@@ -384,7 +402,7 @@ abstract class _RoomBoardState implements RoomBoardState {
   @override
   List<Reply> get replies;
   @override
-  String get targetCommentId;
+  Comment? get targetComment;
 
   /// Create a copy of RoomBoardState
   /// with the given fields replaced by the non-null parameter values.
