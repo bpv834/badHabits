@@ -32,10 +32,6 @@ class _RoomBoardScreenState extends State<RoomBoardScreen> {
       viewModel.getCommentsByRoom(widget.room.roomId);
     });
   }
-
-  final TextEditingController _commentTextEditingController =
-      TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<RoomBoardViewModel>();
@@ -62,7 +58,7 @@ class _RoomBoardScreenState extends State<RoomBoardScreen> {
                   DataTableContainer(room: room),
                   // 댓글목록 view
                   Expanded(
-                    child: state.isReplyLoading
+                    child: state.isCommentLoading
                         ? CircularProgressIndicator()
                         : ListView.builder(
                             padding: EdgeInsets.all(8.0),

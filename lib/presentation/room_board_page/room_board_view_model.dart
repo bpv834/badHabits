@@ -237,8 +237,8 @@ class RoomBoardViewModel with ChangeNotifier {
       // FocusScope.of(context).unfocus() => 현재 주어진 BuildContext를 기준으로 가장 가까운 FocusScope 위젯을 찾아 포커스를 해제합니다.
       // Flutter 앱 내에서 어디에 있든 현재 포커스를 가진 위젯(예: 활성화된 TextField)을 해제합니다.
       // 어디서든 키보드를 강제로 내리고 싶을 때.
-      /*  FocusManager.instance.primaryFocus?.unfocus();*/
-      _state = _state.copyWith(isReplyLoading: true);
+        FocusManager.instance.primaryFocus?.unfocus();
+      _state = _state.copyWith(isCommentLoading: true);
       notifyListeners();
 
       // Firestore 인스턴스 초기화
@@ -257,7 +257,7 @@ class RoomBoardViewModel with ChangeNotifier {
     }
   }
 
-  // 댓글 수정 함수
+  // 댓글 수정 메서드
   Future<void> fixComment(Room room, Comment comment, String fixedComment) async {
     try {
       /*_state= state.copyWith(isReplyLoading: true);
@@ -328,7 +328,7 @@ class RoomBoardViewModel with ChangeNotifier {
   //룸보드의 댓글 불러오기
   Future<void> getCommentsByRoom(String roomId) async {
     // 로딩 상태 업데이트
-    _state = _state.copyWith(isReplyLoading: true);
+    _state = _state.copyWith(isCommentLoading: true);
     notifyListeners();
 
     // 댓글 리스트 가져오기
@@ -347,7 +347,7 @@ class RoomBoardViewModel with ChangeNotifier {
     }));
 
     // 상태 업데이트
-    _state = _state.copyWith(comments: updatedComments, isReplyLoading: false);
+    _state = _state.copyWith(comments: updatedComments, isCommentLoading: false);
     notifyListeners();
   }
 

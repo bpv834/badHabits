@@ -21,7 +21,7 @@ RoomBoardState _$RoomBoardStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$RoomBoardState {
   bool get isLoading => throw _privateConstructorUsedError;
-  bool get isReplyLoading => throw _privateConstructorUsedError;
+  bool get isCommentLoading => throw _privateConstructorUsedError;
   bool get commentState => throw _privateConstructorUsedError;
   bool get replyState => throw _privateConstructorUsedError;
   bool get commentFixState => throw _privateConstructorUsedError;
@@ -49,7 +49,7 @@ abstract class $RoomBoardStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isLoading,
-      bool isReplyLoading,
+      bool isCommentLoading,
       bool commentState,
       bool replyState,
       bool commentFixState,
@@ -77,7 +77,7 @@ class _$RoomBoardStateCopyWithImpl<$Res, $Val extends RoomBoardState>
   @override
   $Res call({
     Object? isLoading = null,
-    Object? isReplyLoading = null,
+    Object? isCommentLoading = null,
     Object? commentState = null,
     Object? replyState = null,
     Object? commentFixState = null,
@@ -91,9 +91,9 @@ class _$RoomBoardStateCopyWithImpl<$Res, $Val extends RoomBoardState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      isReplyLoading: null == isReplyLoading
-          ? _value.isReplyLoading
-          : isReplyLoading // ignore: cast_nullable_to_non_nullable
+      isCommentLoading: null == isCommentLoading
+          ? _value.isCommentLoading
+          : isCommentLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       commentState: null == commentState
           ? _value.commentState
@@ -151,7 +151,7 @@ abstract class _$$RoomBoardStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool isLoading,
-      bool isReplyLoading,
+      bool isCommentLoading,
       bool commentState,
       bool replyState,
       bool commentFixState,
@@ -178,7 +178,7 @@ class __$$RoomBoardStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
-    Object? isReplyLoading = null,
+    Object? isCommentLoading = null,
     Object? commentState = null,
     Object? replyState = null,
     Object? commentFixState = null,
@@ -192,9 +192,9 @@ class __$$RoomBoardStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      isReplyLoading: null == isReplyLoading
-          ? _value.isReplyLoading
-          : isReplyLoading // ignore: cast_nullable_to_non_nullable
+      isCommentLoading: null == isCommentLoading
+          ? _value.isCommentLoading
+          : isCommentLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       commentState: null == commentState
           ? _value.commentState
@@ -235,7 +235,7 @@ class _$RoomBoardStateImpl
     implements _RoomBoardState {
   const _$RoomBoardStateImpl(
       {this.isLoading = false,
-      this.isReplyLoading = false,
+      this.isCommentLoading = false,
       this.commentState = true,
       this.replyState = false,
       this.commentFixState = false,
@@ -255,7 +255,7 @@ class _$RoomBoardStateImpl
   final bool isLoading;
   @override
   @JsonKey()
-  final bool isReplyLoading;
+  final bool isCommentLoading;
   @override
   @JsonKey()
   final bool commentState;
@@ -297,7 +297,7 @@ class _$RoomBoardStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RoomBoardState(isLoading: $isLoading, isReplyLoading: $isReplyLoading, commentState: $commentState, replyState: $replyState, commentFixState: $commentFixState, mutableProgress: $mutableProgress, comments: $comments, replies: $replies, targetComment: $targetComment)';
+    return 'RoomBoardState(isLoading: $isLoading, isCommentLoading: $isCommentLoading, commentState: $commentState, replyState: $replyState, commentFixState: $commentFixState, mutableProgress: $mutableProgress, comments: $comments, replies: $replies, targetComment: $targetComment)';
   }
 
   @override
@@ -306,7 +306,7 @@ class _$RoomBoardStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'RoomBoardState'))
       ..add(DiagnosticsProperty('isLoading', isLoading))
-      ..add(DiagnosticsProperty('isReplyLoading', isReplyLoading))
+      ..add(DiagnosticsProperty('isCommentLoading', isCommentLoading))
       ..add(DiagnosticsProperty('commentState', commentState))
       ..add(DiagnosticsProperty('replyState', replyState))
       ..add(DiagnosticsProperty('commentFixState', commentFixState))
@@ -323,8 +323,8 @@ class _$RoomBoardStateImpl
             other is _$RoomBoardStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.isReplyLoading, isReplyLoading) ||
-                other.isReplyLoading == isReplyLoading) &&
+            (identical(other.isCommentLoading, isCommentLoading) ||
+                other.isCommentLoading == isCommentLoading) &&
             (identical(other.commentState, commentState) ||
                 other.commentState == commentState) &&
             (identical(other.replyState, replyState) ||
@@ -344,7 +344,7 @@ class _$RoomBoardStateImpl
   int get hashCode => Object.hash(
       runtimeType,
       isLoading,
-      isReplyLoading,
+      isCommentLoading,
       commentState,
       replyState,
       commentFixState,
@@ -373,7 +373,7 @@ class _$RoomBoardStateImpl
 abstract class _RoomBoardState implements RoomBoardState {
   const factory _RoomBoardState(
       {final bool isLoading,
-      final bool isReplyLoading,
+      final bool isCommentLoading,
       final bool commentState,
       final bool replyState,
       final bool commentFixState,
@@ -388,7 +388,7 @@ abstract class _RoomBoardState implements RoomBoardState {
   @override
   bool get isLoading;
   @override
-  bool get isReplyLoading;
+  bool get isCommentLoading;
   @override
   bool get commentState;
   @override

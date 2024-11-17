@@ -74,14 +74,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i1072.TilesRepository>(() => _i719.TilesRepositoryImpl());
     gh.singleton<_i241.UserRepository>(() => _i284.UserRepositoryImpl());
     gh.singleton<_i366.ReplyRepository>(() => _i284.ReplyRepositoryImpl());
+    gh.singleton<_i793.CommentRepository>(() => _i105.CommentRepositoryImpl());
     gh.factory<_i136.RoomViewModel>(
         () => _i136.RoomViewModel(gh<_i300.GetRoomsUseCase>()));
     gh.singleton<_i452.GetRepliesDescUseCase>(() => _i452.GetRepliesDescUseCase(
         replyRepository: gh<_i366.ReplyRepository>()));
     gh.singleton<_i336.GetUserTilesAscUseCase>(
         () => _i336.GetUserTilesAscUseCase(gh<_i1072.TilesRepository>()));
-    gh.singleton<_i793.CommentRepository>(() => _i105.CommentRepositoryImpl(
-        getRepliesDescUseCase: gh<_i452.GetRepliesDescUseCase>()));
+    gh.singleton<_i885.GetMyRoomBoardCommentsDateDescUseCase>(() =>
+        _i885.GetMyRoomBoardCommentsDateDescUseCase(
+            commentRepository: gh<_i793.CommentRepository>()));
+    gh.factory<_i596.RoomBoardViewModel>(() => _i596.RoomBoardViewModel(
+          getMyRoomBoardCommentsDateAscUseCase:
+              gh<_i885.GetMyRoomBoardCommentsDateDescUseCase>(),
+          getRepliesDescUseCase: gh<_i452.GetRepliesDescUseCase>(),
+        ));
     gh.singleton<_i467.GetUserAscUseCase>(
         () => _i467.GetUserAscUseCase(gh<_i241.UserRepository>()));
     gh.factory<_i198.MyViewModel>(() => _i198.MyViewModel(
@@ -94,14 +101,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i209.HomeViewModel>(() => _i209.HomeViewModel(
           gh<_i467.GetUserAscUseCase>(),
           gh<_i336.GetUserTilesAscUseCase>(),
-        ));
-    gh.singleton<_i885.GetMyRoomBoardCommentsDateDescUseCase>(() =>
-        _i885.GetMyRoomBoardCommentsDateDescUseCase(
-            commentRepository: gh<_i793.CommentRepository>()));
-    gh.factory<_i596.RoomBoardViewModel>(() => _i596.RoomBoardViewModel(
-          getMyRoomBoardCommentsDateAscUseCase:
-              gh<_i885.GetMyRoomBoardCommentsDateDescUseCase>(),
-          getRepliesDescUseCase: gh<_i452.GetRepliesDescUseCase>(),
         ));
     return this;
   }

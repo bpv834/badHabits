@@ -9,7 +9,7 @@ part of 'room_board_state.dart';
 _$RoomBoardStateImpl _$$RoomBoardStateImplFromJson(Map<String, dynamic> json) =>
     _$RoomBoardStateImpl(
       isLoading: json['isLoading'] as bool? ?? false,
-      isReplyLoading: json['isReplyLoading'] as bool? ?? false,
+      isCommentLoading: json['isCommentLoading'] as bool? ?? false,
       commentState: json['commentState'] as bool? ?? true,
       replyState: json['replyState'] as bool? ?? false,
       commentFixState: json['commentFixState'] as bool? ?? false,
@@ -35,7 +35,7 @@ Map<String, dynamic> _$$RoomBoardStateImplToJson(
         _$RoomBoardStateImpl instance) =>
     <String, dynamic>{
       'isLoading': instance.isLoading,
-      'isReplyLoading': instance.isReplyLoading,
+      'isCommentLoading': instance.isCommentLoading,
       'commentState': instance.commentState,
       'replyState': instance.replyState,
       'commentFixState': instance.commentFixState,

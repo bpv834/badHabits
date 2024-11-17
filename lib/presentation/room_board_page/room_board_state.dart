@@ -11,7 +11,7 @@ part 'room_board_state.g.dart';
 class RoomBoardState with _$RoomBoardState {
   const factory RoomBoardState({
     @Default(false) bool isLoading,
-    @Default(false) bool isReplyLoading,
+    @Default(false) bool isCommentLoading,
     @Default(true) bool commentState,
     @Default(false) bool replyState,
     @Default(false) bool commentFixState,
